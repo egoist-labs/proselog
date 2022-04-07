@@ -14,7 +14,7 @@ specifiers:
   '@types/graphql-iso-date': 3.4.0
   '@types/node': 17.0.21
   '@types/react': 17.0.43
-  '@types/react-dom': 17.0.14
+  '@types/react-dom': 17.0.15
   apollo-server-core: 3.6.7
   apollo-server-micro: 3.6.7
   autoprefixer: 10.4.4
@@ -77,7 +77,7 @@ devDependencies:
   '@types/graphql-iso-date': 3.4.0
   '@types/node': 17.0.21
   '@types/react': 17.0.43
-  '@types/react-dom': 17.0.14
+  '@types/react-dom': 17.0.15
   autoprefixer: 10.4.4_postcss@8.4.12
   husky: 7.0.4
   lint-staged: 12.3.7
@@ -1528,8 +1528,8 @@ packages:
     resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
     dev: true
 
-  /@types/react-dom/17.0.14:
-    resolution: {integrity: sha512-H03xwEP1oXmSfl3iobtmQ/2dHF5aBHr8aUMwyGZya6OW45G+xtdzmq6HkncefiBt5JU8DVyaWl/nWZbjZCnzAQ==}
+  /@types/react-dom/17.0.15:
+    resolution: {integrity: sha512-Tr9VU9DvNoHDWlmecmcsE5ZZiUkYx+nKBzum4Oxe1K0yJVyBlfbq7H3eXjxXqJczBKqPGq3EgfTru4MgKb9+Yw==}
     dependencies:
       '@types/react': 17.0.43
     dev: true
