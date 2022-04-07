@@ -13,7 +13,7 @@ specifiers:
   '@types/cors': 2.8.12
   '@types/graphql-iso-date': ^3.4.0
   '@types/node': 17.0.21
-  '@types/react': 17.0.40
+  '@types/react': 17.0.43
   '@types/react-dom': 17.0.13
   apollo-server-core: 3.6.4
   apollo-server-micro: 3.6.4
@@ -76,7 +76,7 @@ devDependencies:
   '@types/cors': 2.8.12
   '@types/graphql-iso-date': 3.4.0
   '@types/node': 17.0.21
-  '@types/react': 17.0.40
+  '@types/react': 17.0.43
   '@types/react-dom': 17.0.13
   autoprefixer: 10.4.4_postcss@8.4.12
   husky: 7.0.4
@@ -1518,11 +1518,11 @@ packages:
   /@types/react-dom/17.0.13:
     resolution: {integrity: sha512-wEP+B8hzvy6ORDv1QBhcQia4j6ea4SFIBttHYpXKPFZRviBvknq0FRh3VrIxeXUmsPkwuXVZrVGG7KUVONmXCQ==}
     dependencies:
-      '@types/react': 17.0.40
+      '@types/react': 17.0.43
     dev: true
 
-  /@types/react/17.0.40:
-    resolution: {integrity: sha512-UrXhD/JyLH+W70nNSufXqMZNuUD2cXHu6UjCllC6pmOQgBX4SGXOH8fjRka0O0Ee0HrFxapDD8Bwn81Kmiz6jQ==}
+  /@types/react/17.0.43:
+    resolution: {integrity: sha512-8Q+LNpdxf057brvPu1lMtC5Vn7J119xrP1aq4qiaefNioQUYANF/CYeK4NsKorSZyUGJ66g0IM+4bbjwx45o2A==}
     dependencies:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
