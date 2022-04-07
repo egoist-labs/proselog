@@ -6,7 +6,7 @@ specifiers:
   '@graphql-codegen/introspection': 2.1.1
   '@graphql-codegen/typescript': 2.4.8
   '@graphql-codegen/typescript-operations': 2.3.5
-  '@graphql-codegen/typescript-urql': 3.5.6
+  '@graphql-codegen/typescript-urql': 3.5.7
   '@panva/hkdf': ^1.0.1
   '@prisma/client': 3.11.0
   '@types/cookie': ^0.4.1
@@ -71,7 +71,7 @@ devDependencies:
   '@graphql-codegen/introspection': 2.1.1_graphql@15.8.0
   '@graphql-codegen/typescript': 2.4.8_graphql@15.8.0
   '@graphql-codegen/typescript-operations': 2.3.5_graphql@15.8.0
-  '@graphql-codegen/typescript-urql': 3.5.6_graphql@15.8.0
+  '@graphql-codegen/typescript-urql': 3.5.7_graphql@15.8.0
   '@types/cookie': 0.4.1
   '@types/cors': 2.8.12
   '@types/graphql-iso-date': 3.4.0
@@ -848,8 +848,8 @@ packages:
       - supports-color
     dev: true
 
-  /@graphql-codegen/typescript-urql/3.5.6_graphql@15.8.0:
-    resolution: {integrity: sha512-gMoCCYnM8xiesX9+99bJUEG24L+/e0+UdZl3w0CuqcMMqUQUDpDvJjRxQeK6hMM0DkniB4LEE+9WOJKx96CSzw==}
+  /@graphql-codegen/typescript-urql/3.5.7_graphql@15.8.0:
+    resolution: {integrity: sha512-HTl/Ddta3LO+nd667su6Mn6wfeoCoReadqC5peNNOySKawsUxiH3JqttvT/deasReRcwBFL9b24SpPd1fISsFA==}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
       graphql-tag: ^2.0.0
