@@ -32,7 +32,7 @@ specifiers:
   next: 12.1.4
   next-connect: 0.12.2
   postcss: 8.4.12
-  preact: 10.6.6
+  preact: 10.7.1
   prettier: 2.6.2
   prisma: 3.11.0
   react: 17.0.2
@@ -82,7 +82,7 @@ devDependencies:
   husky: 7.0.4
   lint-staged: 12.3.7
   postcss: 8.4.12
-  preact: 10.6.6
+  preact: 10.7.1
   prettier: 2.6.2
   prisma: 3.11.0
   tailwindcss: 3.0.23_autoprefixer@10.4.4
@@ -4068,8 +4068,8 @@ packages:
       source-map-js: 1.0.2
     dev: false
 
-  /preact/10.6.6:
-    resolution: {integrity: sha512-dgxpTFV2vs4vizwKohYKkk7g7rmp1wOOcfd4Tz3IB3Wi+ivZzsn/SpeKJhRENSE+n8sUfsAl4S3HiCVT923ABw==}
+  /preact/10.7.1:
+    resolution: {integrity: sha512-MufnRFz39aIhs9AMFisonjzTud1PK1bY+jcJLo6m2T9Uh8AqjD77w11eAAawmjUogoGOnipECq7e/1RClIKsxg==}
     dev: true
 
   /prepend-http/2.0.0:
