@@ -28,7 +28,7 @@
     "formik": "^2.2.9",
     "graphql": "15.8.0",
     "graphql-iso-date": "3.6.1",
-    "jose": "4.6.0",
+    "jose": "4.6.1",
     "micro": "9.3.4",
     "nanoid": "3.3.2",
     "next": "12.1.4",
