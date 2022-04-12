@@ -22,7 +22,7 @@
     "apollo-server-micro": "3.6.7",
     "class-validator": "0.13.2",
     "clsx": "^1.1.1",
-    "cookie": "0.4.2",
+    "cookie": "0.5.0",
     "cors": "2.8.5",
     "dayjs": "1.11.0",
     "formik": "^2.2.9",

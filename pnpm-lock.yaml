@@ -20,7 +20,7 @@ specifiers:
   autoprefixer: 10.4.4
   class-validator: 0.13.2
   clsx: ^1.1.1
-  cookie: 0.4.2
+  cookie: 0.5.0
   cors: 2.8.5
   dayjs: 1.11.0
   formik: ^2.2.9
@@ -52,7 +52,7 @@ dependencies:
   apollo-server-micro: 3.6.7_graphql@15.8.0+micro@9.3.4
   class-validator: 0.13.2
   clsx: 1.1.1
-  cookie: 0.4.2
+  cookie: 0.5.0
   cors: 2.8.5
   dayjs: 1.11.0
   formik: 2.2.9_react@17.0.2
@@ -2281,8 +2281,8 @@ packages:
       safe-buffer: 5.1.2
     dev: true
 
-  /cookie/0.4.2:
-    resolution: {integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==}
+  /cookie/0.5.0:
+    resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
     dev: false
 
