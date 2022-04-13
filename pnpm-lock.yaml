@@ -17,7 +17,7 @@ specifiers:
   '@headlessui/react': ^1.5.0
   '@panva/hkdf': 1.0.1
   '@prisma/client': 3.12.0
-  '@types/cookie': 0.4.1
+  '@types/cookie': 0.5.0
   '@types/cors': 2.8.12
   '@types/graphql-iso-date': 3.4.0
   '@types/node': 17.0.21
@@ -95,7 +95,7 @@ devDependencies:
   '@graphql-codegen/typescript': 2.4.8_graphql@15.8.0
   '@graphql-codegen/typescript-operations': 2.3.5_graphql@15.8.0
   '@graphql-codegen/typescript-urql': 3.5.7_graphql@15.8.0
-  '@types/cookie': 0.4.1
+  '@types/cookie': 0.5.0
   '@types/cors': 2.8.12
   '@types/graphql-iso-date': 3.4.0
   '@types/node': 17.0.21
@@ -1772,8 +1772,8 @@ packages:
     engines: {node: '>= 10'}
     dev: true
 
-  /@types/cookie/0.4.1:
-    resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
+  /@types/cookie/0.5.0:
+    resolution: {integrity: sha512-CJWHVHHupxBYfIlMM+qzXx4dRKIV1VzOm0cP3Wpqten8MDx1tK+y92YDXUshN1ONAfwodvKxDNkw35/pNs+izg==}
     dev: true
 
   /@types/cors/2.8.12:
