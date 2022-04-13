@@ -1,13 +1,13 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@codemirror/basic-setup': ^0.19.3
-  '@codemirror/commands': ^0.19.8
-  '@codemirror/gutter': ^0.19.9
-  '@codemirror/history': ^0.19.2
-  '@codemirror/lang-markdown': ^0.19.6
-  '@codemirror/state': ^0.19.9
-  '@codemirror/view': ^0.19.48
+  '@codemirror/basic-setup': 0.19.3
+  '@codemirror/commands': 0.19.8
+  '@codemirror/gutter': 0.19.9
+  '@codemirror/history': 0.19.2
+  '@codemirror/lang-markdown': 0.19.6
+  '@codemirror/state': 0.19.9
+  '@codemirror/view': 0.19.48
   '@egoist/prettier-config': 1.0.0
   '@graphql-codegen/cli': 2.6.2
   '@graphql-codegen/introspection': 2.1.1
