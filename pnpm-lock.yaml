@@ -37,7 +37,7 @@ specifiers:
   graphql-iso-date: 3.6.1
   husky: 7.0.4
   jose: 4.6.1
-  lint-staged: 12.3.7
+  lint-staged: 12.3.8
   micro: 9.3.4
   nanoid: 3.3.2
   next: 12.1.5
@@ -104,7 +104,7 @@ devDependencies:
   '@types/uuid': 8.3.4
   autoprefixer: 10.4.4_postcss@8.4.12
   husky: 7.0.4
-  lint-staged: 12.3.7
+  lint-staged: 12.3.8
   postcss: 8.4.12
   preact: 10.7.1
   prettier: 2.6.2
@@ -3670,8 +3670,8 @@ packages:
     resolution: {integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=}
     dev: true
 
-  /lint-staged/12.3.7:
-    resolution: {integrity: sha512-/S4D726e2GIsDVWIk1XGvheCaDm1SJRQp8efamZFWJxQMVEbOwSysp7xb49Oo73KYCdy97mIWinhlxcoNqIfIQ==}
+  /lint-staged/12.3.8:
+    resolution: {integrity: sha512-0+UpNaqIwKRSGAFOCcpuYNIv/j5QGVC+xUVvmSdxHO+IfIGoHbFLo3XcPmV/LLnsVj5EAncNHVtlITSoY5qWGQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     hasBin: true
     dependencies:
