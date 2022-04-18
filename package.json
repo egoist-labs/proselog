@@ -37,7 +37,7 @@
     "formik": "^2.2.9",
     "graphql": "15.8.0",
     "graphql-iso-date": "3.6.1",
-    "graphql-tag": "^2.12.6",
+    "graphql-tag": "2.12.6",
     "jose": "4.6.1",
     "micro": "9.3.4",
     "multiparty": "^4.2.3",

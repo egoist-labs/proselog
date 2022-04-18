@@ -39,7 +39,7 @@ specifiers:
   formik: ^2.2.9
   graphql: 15.8.0
   graphql-iso-date: 3.6.1
-  graphql-tag: ^2.12.6
+  graphql-tag: 2.12.6
   husky: 7.0.4
   jose: 4.6.1
   lint-staged: 12.3.8
