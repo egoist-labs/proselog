@@ -92,8 +92,8 @@ export const siteController = {
         take: validated.take + 1,
         cursor: validated.cursor
           ? {
-              id: validated.cursor,
-            }
+            id: validated.cursor,
+          }
           : undefined,
       }),
       await prisma.page.count({
@@ -130,29 +130,29 @@ export const siteController = {
 
     const page = input.pageId
       ? await prisma.page.findUnique({
-          where: {
-            id: input.pageId,
-          },
-          include: {
-            site: true,
-          },
-        })
+        where: {
+          id: input.pageId,
+        },
+        include: {
+          site: true,
+        },
+      })
       : await prisma.page.create({
-          data: {
-            title: "Untitled",
-            slug: `untitled-${nanoid(4)}`,
-            site: {
-              connect: {
-                id: input.siteId,
-              },
+        data: {
+          title: "Untitled",
+          slug: `untitled-${nanoid(4)}`,
+          site: {
+            connect: {
+              id: input.siteId,
             },
-            content: "",
-            excerpt: "",
           },
-          include: {
-            site: true,
-          },
-        })
+          content: "",
+          excerpt: "",
+        },
+        include: {
+          site: true,
+        },
+      })
 
     if (!page || page.deletedAt) {
       throw new Error(`Page not found`)
@@ -205,15 +205,15 @@ export const siteController = {
 
     const page = isPageUUID
       ? await prisma.page.findUnique({
-          where: {
-            id: input.page,
-          },
-        })
+        where: {
+          id: input.page,
+        },
+      })
       : site
-      ? await prisma.page.findFirst({
+        ? await prisma.page.findFirst({
           where: { siteId: site.id, slug: input.page },
         })
-      : null
+        : null
 
     if (!page || page.deletedAt) {
       throw new Response(`page ${input.page} not found`, {
@@ -294,7 +294,7 @@ export const siteController = {
         },
         pages: {
           create: {
-            title: "Aboute",
+            title: "About",
             slug: "about",
             excerpt: "",
             content: `My name is ${payload.name} and I'm a new site.`,
