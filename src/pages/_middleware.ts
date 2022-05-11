@@ -18,7 +18,7 @@ export default function middleware(req: NextRequest) {
 
   const HK_REGIONS = ["HK", "CN", "JP"]
 
-  console.log("visit from region", req.geo?.region)
+  console.log("visit from ", req.geo)
 
   if (
     process.env.IS_PRIMARY_REGION &&
