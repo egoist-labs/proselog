@@ -16,15 +16,15 @@ export default function middleware(req: NextRequest) {
 
   const tenant = getTenant(req, req.nextUrl.searchParams)
 
-  const HK_REGIONS = ["HK", "CN", "JP"]
+  const COUNTRY_TO_FORWARD_TO_HK = ["HK", "CN", "JP", "SG", "KR"]
 
   console.log("visit from ", req.geo)
 
   if (
     process.env.IS_PRIMARY_REGION &&
-    req.geo?.region &&
+    req.geo?.country &&
     ["GET", "OPTIONS", "HEAD"].includes(req.method) &&
-    HK_REGIONS.includes(req.geo.region)
+    COUNTRY_TO_FORWARD_TO_HK.includes(req.geo.country)
   ) {
     const url = req.nextUrl.clone()
     url.hostname = "proselog-hk.vercel.app"
