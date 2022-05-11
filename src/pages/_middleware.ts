@@ -31,6 +31,7 @@ export default function middleware(req: NextRequest) {
     if (tenant) {
       url.searchParams.set("tenant", tenant)
     }
+    console.log("forward to hk", url.href)
     return NextResponse.rewrite(url)
   }
 
