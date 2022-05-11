@@ -14,11 +14,29 @@ export default function middleware(req: NextRequest) {
     )
   }
 
+  const tenant = getTenant(req, req.nextUrl.searchParams)
+
+  const HK_REGIONS = ["HK", "CN", "JP"]
+
+  console.log("visit from region", req.geo?.region)
+
+  if (
+    process.env.IS_PRIMARY_REGION &&
+    req.geo?.region &&
+    ["GET", "OPTIONS", "HEAD"].includes(req.method) &&
+    HK_REGIONS.includes(req.geo.region)
+  ) {
+    const url = req.nextUrl.clone()
+    url.hostname = "proselog-hk.vercel.app"
+    if (tenant) {
+      url.searchParams.set("tenant", tenant)
+    }
+    return NextResponse.rewrite(url)
+  }
+
   if (pathname.startsWith("/api/") || pathname.startsWith("/dashboard")) {
     return NextResponse.next()
   }
-
-  const tenant = getTenant(req)
 
   if (tenant) {
     const url = req.nextUrl.clone()

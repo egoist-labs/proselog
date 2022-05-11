@@ -1,7 +1,12 @@
 import { OUR_DOMAIN } from "./env"
 
-export const getTenant = (request: Request) => {
+export const getTenant = (request: Request, searchParams: URLSearchParams) => {
   const host = request.headers.get("host")
+
+  const tenant = searchParams.get("tenant")
+  if (tenant) {
+    return tenant
+  }
 
   if (!OUR_DOMAIN) {
     throw new Error("missing OUR_DOMAIN env")
