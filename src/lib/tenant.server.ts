@@ -9,6 +9,10 @@ export const getTenant = (request: Request) => {
 
   const OUR_DOMAIN_SUFFIX = `.${OUR_DOMAIN}`
   if (host) {
+    if (host.endsWith(".vercel.app")) {
+      return
+    }
+
     if (host.endsWith(OUR_DOMAIN_SUFFIX)) {
       const subdomain = host.replace(OUR_DOMAIN_SUFFIX, "")
       return subdomain
