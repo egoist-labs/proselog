@@ -1,11 +1,10 @@
-import fs from "fs"
 import path from "path"
 import Markdown from "markdown-it"
 import * as shiki from "shiki"
 import { getUserContentsUrl } from "./user-contents"
 
 // Let's see it Vercel bundles these files
-fs.readdirSync(path.resolve("node_modules/shiki/themes"))
+path.resolve("node_modules/shiki")
 
 const isExternLink = (url: string) => /^https?:\/\//.test(url)
 
