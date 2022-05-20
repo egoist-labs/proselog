@@ -111,7 +111,6 @@ export const sendEmailForNewPost = async (payload: {
       pageSlug: payload.post.slug,
       subdomain: payload.site.subdomain,
     })
-    console.log(html)
 
     const recipientVariables: {
       [email in string]: { unsubscribeToken: string }
