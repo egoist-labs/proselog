@@ -14,6 +14,9 @@ import { PageVisibilityEnum } from "~/lib/types"
 import { isUUID } from "~/lib/uuid"
 import { getSite } from "./site.model"
 import { stripHTML } from "~/lib/utils"
+import { getSiteLink } from "~/lib/helpers"
+import juice from "juice"
+import { checkEmailTemplateSegment } from "~/lib/reserved-words"
 
 const checkPageSlug = async ({
   slug,
@@ -27,6 +30,8 @@ const checkPageSlug = async ({
   if (!slug) {
     throw new Error("Missing page slug")
   }
+
+  checkEmailTemplateSegment(slug)
 
   const page = await prismaPrimary.page.findFirst({
     where: {
@@ -350,4 +355,35 @@ export const notifySubscribersForNewPost = async (
     site,
     subscribers: emailSubscribers,
   })
+}
+
+export const renderPageForEmail = async (input: {
+  pageSlug: string
+  subdomain: string
+}) => {
+  const siteLink = getSiteLink({
+    subdomain: input.subdomain,
+  })
+  const url = `${siteLink}/__email_templates__/${input.pageSlug}`
+  const html = await fetch(url)
+    .then((res) => res.text())
+    .then((html) => html.replace(/<script[^\>]*><\/script>/g, ""))
+
+  const resultHTML = await new Promise<string>((resolve, reject) => {
+    juice.juiceResources(
+      html,
+      {
+        webResources: {
+          scripts: false,
+          relativeTo: siteLink,
+        },
+      },
+      (err, result) => {
+        if (err) return reject(err)
+        resolve(result)
+      }
+    )
+  })
+
+  return resultHTML
 }
