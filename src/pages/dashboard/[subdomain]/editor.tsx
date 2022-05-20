@@ -16,6 +16,8 @@ import { UniLink } from "~/components/ui/UniLink"
 import { useUploadFile } from "~/hooks/useUploadFile"
 import { PublishButton } from "~/components/dashboard/PublishButton"
 import { inLocalTimezone } from "~/lib/date"
+import { EditorToolbar } from "~/components/ui/EditorToolbar"
+import { toolbars } from "~/components/command"
 
 const getInputDatetimeValue = (date: Date | string) => {
   const str = dayjs(date).format()
@@ -212,6 +214,7 @@ export default function SubdomainEditor() {
               </div>
               <div className="mt-5">
                 <div className="">
+                  <EditorToolbar view={view} toolbars={toolbars}></EditorToolbar>
                   <div ref={editorRef}></div>
                 </div>
               </div>
