@@ -379,6 +379,8 @@ export const renderPageForEmail = async (input: {
       {
         webResources: {
           scripts: false,
+          images: false,
+          svgs: false,
           relativeTo: siteLink,
         },
       },
