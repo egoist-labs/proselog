@@ -6,21 +6,20 @@ RUN apt-get update && apt-get install -y openssl
 
 RUN npm i -g pnpm
 
-##### DEPS
-FROM base as deps
-
-WORKDIR /app
-
-ADD . .
-
-RUN pnpm i
-
 ##### BUILD
-FROM deps as build
+FROM base as build
+
+# you can set the value using --build-arg
+ARG env_file=.docker.env
 
 WORKDIR /app
 
-COPY --from=deps /app /app
+COPY package.json pnpm-lock.yaml ./
+
+RUN pnpm install --frozen-lockfile
+
+COPY . .
+COPY ${env_file} .env
 
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
@@ -40,5 +39,7 @@ COPY --from=build /app/package.json /app/package.json
 COPY --from=build /app/.next /app/.next
 COPY --from=build /app/public /app/public
 
-CMD ["pnpm", "start"]
+ENV PORT 8080
+EXPOSE 8080
 
+CMD ["pnpm", "start"]
