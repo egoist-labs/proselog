@@ -9,6 +9,9 @@ RUN npm i -g pnpm
 ##### BUILD
 FROM base as build
 
+# you can set the value using --build-arg
+ARG env_file=.env.example
+
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
@@ -16,6 +19,7 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
+COPY ${env_file} .env
 
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
@@ -34,5 +38,8 @@ COPY --from=build /app/node_modules /app/node_modules
 COPY --from=build /app/package.json /app/package.json
 COPY --from=build /app/.next /app/.next
 COPY --from=build /app/public /app/public
+
+ENV PORT 8080
+EXPOSE 8080
 
 CMD ["pnpm", "start"]
