@@ -198,7 +198,7 @@ export default function SubdomainEditor() {
         </header>
         <div className="h-screen pt-14 flex w-full">
           <div className="h-full overflow-auto w-full">
-            <div className="max-w-screen-md mx-auto py-5 px-5">
+            <div className="mx-auto py-5 px-5">
               <div>
                 <input
                   type="text"
