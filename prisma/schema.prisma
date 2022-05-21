@@ -75,6 +75,8 @@ model Membership {
     lastSwitchedTo DateTime       @default(now())
     config         Json           @default("{}")
 
+    @@index([userId])
+    @@index([siteId])
     @@map("memberships")
 }
 
@@ -120,5 +122,6 @@ model Page {
     authors               User[]
 
     @@unique([siteId, slug])
+    @@index([publishedAt])
     @@map("pages")
 }
