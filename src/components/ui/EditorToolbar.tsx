@@ -46,7 +46,7 @@ export const EditorToolbar: FC<EditorToolbarProps> = ({
       )
 
   return (
-    <div className="flex px-1 py-1 bg-gray-100 border-b border-gray-200">
+    <div className="flex px-1 py-1 bg-gray-100 border rounded border-gray-200">
       <div className="flex-1">
         {toolbars?.map(renderToolbar(ToolbarMode.Normal))}
       </div>

@@ -175,7 +175,7 @@ export default function SubdomainEditor() {
     <DashboardLayout title="Editor">
       <DashboardMain fullWidth>
         <header className="flex justify-between absolute top-0 left-0 right-0 z-10 px-5 h-14 border-b items-center text-sm">
-          <div></div>
+          <EditorToolbar view={view} toolbars={toolbars} preview={preview} modeToolbars={modeToolbars}></EditorToolbar>
           <div className="flex items-center space-x-3">
             <span
               className={clsx(
@@ -216,7 +216,6 @@ export default function SubdomainEditor() {
               </div>
               <div className="mt-5">
                 <div className="border border-gray-200 rounded">
-                  <EditorToolbar view={view} toolbars={toolbars} preview={preview} modeToolbars={modeToolbars}></EditorToolbar>
                   <div className="flex">
                     <div className="flex-1" ref={editorRef}></div>
                     <EditorPreview ref={preview} className="flex-1" content={content}></EditorPreview>

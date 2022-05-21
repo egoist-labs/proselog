@@ -23,7 +23,7 @@ export interface EditorPreviewRef {
 export const EditorPreview = forwardRef<EditorPreviewRef, EditorPreviewProps>(
   ({ className, content }, ref) => {
     const [html, setHtml] = useState("")
-    const [visible, setVisible] = useState(true)
+    const [visible, setVisible] = useState(false)
     const renderMarkdown = useCallback(async (doc: string) => {
       const pageContent = await renderPageContent(doc)
       setHtml(pageContent.contentHTML)
