@@ -1,5 +1,7 @@
 import { EditorSelection } from "@codemirror/state"
 import { EditorView } from "@codemirror/view"
+import { RefObject } from "react"
+import { EditorPreviewRef } from "../ui/EditorPreview"
 import { Bold } from "./Bold"
 import { Code } from "./Code"
 import { Heading } from "./Heading"
@@ -8,9 +10,9 @@ import { Italic } from "./Italic"
 import { Link } from "./Link"
 import { ListOrdered } from "./ListOrdered"
 import { ListUnordered } from "./ListUnordered"
+import { Preview } from "./Preview"
 import { Quote } from "./Quote"
 import { Strikethrough } from "./Strikethrough"
-import { Underline } from "./Underline"
 
 export type ICommand = {
   icon: React.ReactElement
@@ -18,8 +20,8 @@ export type ICommand = {
   execute: (
     view: EditorView,
     opts?: {
-      preview?: HTMLDivElement | null
-      container?: HTMLDivElement | null
+      preview?: RefObject<EditorPreviewRef> | null
+      container?: HTMLElement | null
     }
   ) => void
 }
@@ -115,7 +117,6 @@ export const toolbars: ICommand[] = [
   Heading,
   Bold,
   Italic,
-  // Underline,
   Strikethrough,
   Quote,
   Code,
@@ -124,3 +125,5 @@ export const toolbars: ICommand[] = [
   Link,
   Image,
 ]
+
+export const modeToolbars: ICommand[] = [Preview]

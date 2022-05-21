@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import dayjs from "dayjs"
-import { ChangeEvent, useCallback, useEffect, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react"
 import { DashboardMain } from "~/components/dashboard/DashboardMain"
 import { getPageVisibility } from "~/lib/page-helpers"
 import { PageVisibilityEnum } from "~/lib/types"
@@ -17,7 +17,8 @@ import { useUploadFile } from "~/hooks/useUploadFile"
 import { PublishButton } from "~/components/dashboard/PublishButton"
 import { inLocalTimezone } from "~/lib/date"
 import { EditorToolbar } from "~/components/ui/EditorToolbar"
-import { toolbars } from "~/components/command"
+import { modeToolbars, toolbars } from "~/components/command"
+import { EditorPreview } from "~/components/ui/EditorPreview"
 
 const getInputDatetimeValue = (date: Date | string) => {
   const str = dayjs(date).format()
@@ -63,6 +64,7 @@ export default function SubdomainEditor() {
     excerpt: "",
   })
   const [content, setContent] = useState("")
+  const preview = useRef(null);
 
   type Values = typeof values
 
@@ -213,9 +215,12 @@ export default function SubdomainEditor() {
                 />
               </div>
               <div className="mt-5">
-                <div className="">
-                  <EditorToolbar view={view} toolbars={toolbars}></EditorToolbar>
-                  <div ref={editorRef}></div>
+                <div className="border border-gray-200 rounded">
+                  <EditorToolbar view={view} toolbars={toolbars} preview={preview} modeToolbars={modeToolbars}></EditorToolbar>
+                  <div className="flex">
+                    <div className="flex-1" ref={editorRef}></div>
+                    <EditorPreview ref={preview} className="flex-1" content={content}></EditorPreview>
+                    </div>
                 </div>
               </div>
             </div>
