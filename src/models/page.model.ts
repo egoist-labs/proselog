@@ -350,10 +350,14 @@ export const notifySubscribersForNewPost = async (
     .filter((member) => (member.config as Prisma.JsonObject).email)
     .map((member) => member.user)
 
-  await sendEmailForNewPost({
+  // TODO: maybe run this in a job queue
+  // We will need to use BullMQ to send email for scheduled posts anyway
+  sendEmailForNewPost({
     post: page,
     site,
     subscribers: emailSubscribers,
+  }).catch((error) => {
+    console.error("failed to send email", error)
   })
 }
 
