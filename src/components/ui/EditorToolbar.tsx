@@ -14,7 +14,7 @@ export const EditorToolbar: FC<EditorToolbarProps> = ({ view, toolbars }) => {
         return (
           <button
             key={name}
-            className="px-1 py-1 mr-1 fill-gray-600 transition-colors hover:fill-blue-500"
+            className="px-1 py-1 mr-1 fill-gray-700 transition-colors hover:fill-blue-500"
             onClick={() => {
               view && execute(view)
             }}

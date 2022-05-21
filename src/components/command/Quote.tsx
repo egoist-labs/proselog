@@ -1,5 +1,4 @@
-import { EditorSelection } from "@codemirror/state"
-import { ICommand } from "."
+import { ICommand, wrapExecute } from "."
 
 export const Quote: ICommand = {
   name: "quote",
@@ -9,14 +8,6 @@ export const Quote: ICommand = {
     </svg>
   ),
   execute: (view) => {
-    view.dispatch(
-      view.state.changeByRange((range) => ({
-        changes: [
-          { from: range.from, insert: "*" },
-          { from: range.to, insert: "*" },
-        ],
-        range: EditorSelection.range(range.from, range.to + 2),
-      }))
-    )
+    wrapExecute({ view, prepend: "> ", append: "\n" })
   },
 }
