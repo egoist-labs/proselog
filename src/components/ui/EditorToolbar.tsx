@@ -9,12 +9,12 @@ export interface EditorToolbarProps {
 
 export const EditorToolbar: FC<EditorToolbarProps> = ({ view, toolbars }) => {
   return (
-    <div className="px-1 py-1 rounded-md bg-gray-100">
+    <div className="px-1 py-1 rounded bg-gray-100 border border-gray-600">
       {toolbars?.map(({ name, icon, execute }) => {
         return (
           <button
             key={name}
-            className="px-1 py-1 mr-1 text-gray-700 stroke-gray-600 bg-gray-200 transition-colors rounded hover:bg-gray-300 hover:stroke-gray-900"
+            className="px-1 py-1 mr-1 fill-gray-600 transition-colors hover:fill-blue-500"
             onClick={() => {
               view && execute(view)
             }}

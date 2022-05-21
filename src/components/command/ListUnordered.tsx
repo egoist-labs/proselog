@@ -1,11 +1,11 @@
 import { EditorSelection } from "@codemirror/state"
 import { ICommand } from "."
 
-export const Italic: ICommand = {
-  name: "italic",
+export const ListUnordered: ICommand = {
+  name: "list-unordered",
   icon: (
     <svg height="16" viewBox="0 0 16 16" width="16">
-      <path d="M6 2.75A.75.75 0 016.75 2h6.5a.75.75 0 010 1.5h-2.505l-3.858 9H9.25a.75.75 0 010 1.5h-6.5a.75.75 0 010-1.5h2.505l3.858-9H6.75A.75.75 0 016 2.75z"></path>
+      <path d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
     </svg>
   ),
   execute: (view) => {

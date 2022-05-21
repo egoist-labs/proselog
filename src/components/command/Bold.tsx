@@ -4,23 +4,15 @@ import { ICommand } from "."
 export const Bold: ICommand = {
   name: "bold",
   icon: (
-    <svg width="24" height="24" viewBox="0 0 48 48" fill="none">
+    <svg
+      height="16"
+      width="16"
+      viewBox="0 0 16 16"
+    >
       <path
         fillRule="evenodd"
-        clipRule="evenodd"
-        d="M24 24C29.5056 24 33.9688 19.5228 33.9688 14C33.9688 8.47715 29.5056 4 24 4H11V24H24Z"
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M28.0312 44C33.5368 44 38 39.5228 38 34C38 28.4772 33.5368 24 28.0312 24H11V44H28.0312Z"
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+        d="M4 2a1 1 0 00-1 1v10a1 1 0 001 1h5.5a3.5 3.5 0 001.852-6.47A3.5 3.5 0 008.5 2H4zm4.5 5a1.5 1.5 0 100-3H5v3h3.5zM5 9v3h4.5a1.5 1.5 0 000-3H5z"
+      ></path>
     </svg>
   ),
   execute: (view) => {
