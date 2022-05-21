@@ -7,7 +7,7 @@
   "scripts": {
     "build": "pnpm db-generate && next build",
     "dev": "next",
-    "test:e2e": "playwright test",
+    "test-e2e": "playwright test",
     "db-generate": "prisma generate",
     "start": "next start --port $PORT",
     "store-prisma-client": "node scripts/restore-prisma-client.js"
