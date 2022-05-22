@@ -1,24 +1,23 @@
+import { type EditorView } from "@codemirror/view"
 import clsx from "clsx"
 import dayjs from "dayjs"
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react"
-import { DashboardMain } from "~/components/dashboard/DashboardMain"
-import { getPageVisibility } from "~/lib/page-helpers"
-import { PageVisibilityEnum } from "~/lib/types"
-import toast from "react-hot-toast"
-import { Input } from "~/components/ui/Input"
-import { getSiteLink } from "~/lib/helpers"
-import { useEditor } from "~/components/ui/Editor"
-import { type EditorView } from "@codemirror/view"
-import { trpc } from "~/lib/trpc"
 import { useRouter } from "next/router"
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react"
+import toast from "react-hot-toast"
+import { modeToolbars, toolbars } from "~/components/command"
 import { DashboardLayout } from "~/components/dashboard/DashboardLayout"
+import { DashboardMain } from "~/components/dashboard/DashboardMain"
+import { PublishButton } from "~/components/dashboard/PublishButton"
+import { useEditor } from "~/components/ui/Editor"
+import { EditorPreview, EditorPreviewRef } from "~/components/ui/EditorPreview"
+import { EditorToolbar } from "~/components/ui/EditorToolbar"
+import { Input } from "~/components/ui/Input"
 import { UniLink } from "~/components/ui/UniLink"
 import { useUploadFile } from "~/hooks/useUploadFile"
-import { PublishButton } from "~/components/dashboard/PublishButton"
-import { inLocalTimezone } from "~/lib/date"
-import { EditorToolbar } from "~/components/ui/EditorToolbar"
-import { modeToolbars, toolbars } from "~/components/command"
-import { EditorPreview } from "~/components/ui/EditorPreview"
+import { getSiteLink } from "~/lib/helpers"
+import { getPageVisibility } from "~/lib/page-helpers"
+import { trpc } from "~/lib/trpc"
+import { PageVisibilityEnum } from "~/lib/types"
 
 const getInputDatetimeValue = (date: Date | string) => {
   const str = dayjs(date).format()
@@ -64,7 +63,16 @@ export default function SubdomainEditor() {
     excerpt: "",
   })
   const [content, setContent] = useState("")
-  const preview = useRef(null);
+
+  const [previewVisible, setPreviewVisible] = useState(false)
+
+  const previewRef = useRef<EditorPreviewRef | null>(null)
+
+  const preview = useCallback((el: EditorPreviewRef) => {
+    setPreviewVisible(el?.visible ?? false)
+    previewRef.current = el
+    return previewRef
+  }, [])
 
   type Values = typeof values
 
@@ -175,7 +183,13 @@ export default function SubdomainEditor() {
     <DashboardLayout title="Editor">
       <DashboardMain fullWidth>
         <header className="flex justify-between absolute top-0 left-0 right-0 z-10 px-5 h-14 border-b items-center text-sm">
-          <EditorToolbar view={view} toolbars={toolbars} preview={preview} modeToolbars={modeToolbars}></EditorToolbar>
+          <EditorToolbar
+            view={view}
+            toolbars={toolbars}
+            preview={previewRef}
+            previewVisible={previewVisible}
+            modeToolbars={modeToolbars}
+          ></EditorToolbar>
           <div className="flex items-center space-x-3">
             <span
               className={clsx(
@@ -218,8 +232,12 @@ export default function SubdomainEditor() {
                 <div className="border border-gray-200 rounded">
                   <div className="flex">
                     <div className="flex-1" ref={editorRef}></div>
-                    <EditorPreview ref={preview} className="flex-1" content={content}></EditorPreview>
-                    </div>
+                    <EditorPreview
+                      ref={preview}
+                      className="flex-1"
+                      content={content}
+                    ></EditorPreview>
+                  </div>
                 </div>
               </div>
             </div>

@@ -9,6 +9,7 @@ export interface EditorToolbarProps {
   toolbars: ICommand[]
   modeToolbars: ICommand[]
   preview: RefObject<EditorPreviewRef>
+  previewVisible: boolean
 }
 
 enum ToolbarMode {
@@ -19,6 +20,7 @@ enum ToolbarMode {
 export const EditorToolbar: FC<EditorToolbarProps> = ({
   view,
   preview,
+  previewVisible,
   toolbars,
   modeToolbars,
 }) => {
@@ -32,10 +34,8 @@ export const EditorToolbar: FC<EditorToolbarProps> = ({
           className={clsx(
             "px-1 py-1 mr-1 fill-gray-700 transition-colors hover:fill-blue-500",
             {
-              "fill-blue-500":
-                (mode === ToolbarMode.Preview && preview?.current?.visible) ??
-                false,
-            }
+              "fill-blue-500": mode === ToolbarMode.Preview && previewVisible,
+            },
           )}
           onClick={() => {
             view && execute(view, { preview, container: view.dom })

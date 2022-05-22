@@ -23,7 +23,7 @@ export interface EditorPreviewRef {
 export const EditorPreview = forwardRef<EditorPreviewRef, EditorPreviewProps>(
   ({ className, content }, ref) => {
     const [html, setHtml] = useState("")
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(true)
     const renderMarkdown = useCallback(async (doc: string) => {
       const pageContent = await renderPageContent(doc)
       setHtml(pageContent.contentHTML)
@@ -37,12 +37,12 @@ export const EditorPreview = forwardRef<EditorPreviewRef, EditorPreviewProps>(
         className={clsx(
           "prose border-l border-gray-100 overflow-auto",
           className,
-          { hidden: !visible }
+          { hidden: !visible },
         )}
         dangerouslySetInnerHTML={{ __html: html ?? "" }}
       ></div>
     )
-  }
+  },
 )
 
 EditorPreview.displayName = "EditorPreview"
