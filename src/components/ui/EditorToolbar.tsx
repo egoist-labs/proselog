@@ -1,15 +1,14 @@
 import { EditorView } from "@codemirror/view"
 import clsx from "clsx"
-import { FC, RefObject } from "react"
+import { Dispatch, FC, SetStateAction } from "react"
 import { ICommand } from "../command"
-import { EditorPreviewRef } from "./EditorPreview"
 
 export interface EditorToolbarProps {
   view: EditorView | null
   toolbars: ICommand[]
   modeToolbars: ICommand[]
-  preview: RefObject<EditorPreviewRef>
   previewVisible: boolean
+  setPreviewVisible: Dispatch<SetStateAction<boolean>>
 }
 
 enum ToolbarMode {
@@ -19,10 +18,10 @@ enum ToolbarMode {
 
 export const EditorToolbar: FC<EditorToolbarProps> = ({
   view,
-  preview,
-  previewVisible,
   toolbars,
   modeToolbars,
+  previewVisible,
+  setPreviewVisible,
 }) => {
   const renderToolbar =
     (mode: ToolbarMode) =>
@@ -38,7 +37,7 @@ export const EditorToolbar: FC<EditorToolbarProps> = ({
             },
           )}
           onClick={() => {
-            view && execute(view, { preview, container: view.dom })
+            view && execute(view, { setPreviewVisible, container: view.dom })
           }}
         >
           {icon}

@@ -1,7 +1,6 @@
 import { EditorSelection } from "@codemirror/state"
 import { EditorView } from "@codemirror/view"
-import { RefObject } from "react"
-import { EditorPreviewRef } from "../ui/EditorPreview"
+import { Dispatch, SetStateAction } from "react"
 import { Bold } from "./Bold"
 import { Code } from "./Code"
 import { Heading } from "./Heading"
@@ -19,10 +18,10 @@ export type ICommand = {
   name: string
   execute: (
     view: EditorView,
-    opts?: {
-      preview?: RefObject<EditorPreviewRef> | null
+    options?: {
+      setPreviewVisible?: Dispatch<SetStateAction<boolean>>
       container?: HTMLElement | null
-    }
+    },
   ) => void
 }
 
@@ -52,9 +51,9 @@ export const prependExecute = ({ view, prepend }: IPrependExecute) => {
         ],
         range: EditorSelection.range(
           range.from - prepend.length,
-          range.to - prepend.length
+          range.to - prepend.length,
         ),
-      }))
+      })),
     )
     view.focus()
     return
@@ -65,10 +64,10 @@ export const prependExecute = ({ view, prepend }: IPrependExecute) => {
         changes: [{ from: range.from, insert: prepend }],
         range: EditorSelection.range(
           range.from + prepend.length,
-          range.to + prepend.length
+          range.to + prepend.length,
         ),
       }
-    })
+    }),
   )
   view.focus()
 }
@@ -77,7 +76,7 @@ export const wrapExecute = ({ view, prepend, append }: IWrapExecute) => {
   const range = view.state.selection.ranges[0]
   const selection = view.state.sliceDoc(
     range.from - prepend.length,
-    range.to + append.length
+    range.to + append.length,
   )
   if (selection.startsWith(prepend) && selection.endsWith(append)) {
     view.dispatch(
@@ -91,9 +90,9 @@ export const wrapExecute = ({ view, prepend, append }: IWrapExecute) => {
         ],
         range: EditorSelection.range(
           range.from - prepend.length,
-          range.to - prepend.length
+          range.to - prepend.length,
         ),
-      }))
+      })),
     )
     view.focus()
     return
@@ -106,9 +105,9 @@ export const wrapExecute = ({ view, prepend, append }: IWrapExecute) => {
       ],
       range: EditorSelection.range(
         range.from + prepend.length,
-        range.to + prepend.length
+        range.to + prepend.length,
       ),
-    }))
+    })),
   )
   view.focus()
 }

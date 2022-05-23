@@ -2,18 +2,19 @@ import { type EditorView } from "@codemirror/view"
 import clsx from "clsx"
 import dayjs from "dayjs"
 import { useRouter } from "next/router"
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { modeToolbars, toolbars } from "~/components/command"
 import { DashboardLayout } from "~/components/dashboard/DashboardLayout"
 import { DashboardMain } from "~/components/dashboard/DashboardMain"
 import { PublishButton } from "~/components/dashboard/PublishButton"
 import { useEditor } from "~/components/ui/Editor"
-import { EditorPreview, EditorPreviewRef } from "~/components/ui/EditorPreview"
+import { EditorPreview } from "~/components/ui/EditorPreview"
 import { EditorToolbar } from "~/components/ui/EditorToolbar"
 import { Input } from "~/components/ui/Input"
 import { UniLink } from "~/components/ui/UniLink"
 import { useUploadFile } from "~/hooks/useUploadFile"
+import { inLocalTimezone } from "~/lib/date"
 import { getSiteLink } from "~/lib/helpers"
 import { getPageVisibility } from "~/lib/page-helpers"
 import { trpc } from "~/lib/trpc"
@@ -65,14 +66,6 @@ export default function SubdomainEditor() {
   const [content, setContent] = useState("")
 
   const [previewVisible, setPreviewVisible] = useState(false)
-
-  const previewRef = useRef<EditorPreviewRef | null>(null)
-
-  const preview = useCallback((el: EditorPreviewRef) => {
-    setPreviewVisible(el?.visible ?? false)
-    previewRef.current = el
-    return previewRef
-  }, [])
 
   type Values = typeof values
 
@@ -186,9 +179,9 @@ export default function SubdomainEditor() {
           <EditorToolbar
             view={view}
             toolbars={toolbars}
-            preview={previewRef}
-            previewVisible={previewVisible}
             modeToolbars={modeToolbars}
+            previewVisible={previewVisible}
+            setPreviewVisible={setPreviewVisible}
           ></EditorToolbar>
           <div className="flex items-center space-x-3">
             <span
@@ -233,8 +226,8 @@ export default function SubdomainEditor() {
                   <div className="flex">
                     <div className="flex-1" ref={editorRef}></div>
                     <EditorPreview
-                      ref={preview}
                       className="flex-1"
+                      previewVisible={previewVisible}
                       content={content}
                     ></EditorPreview>
                   </div>
