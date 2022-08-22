@@ -45,6 +45,9 @@ const createPrisma = (readonly: boolean) => {
     const end = Date.now()
     const duration = Math.floor(end - now)
     console.log("query took", duration, "ms")
+    if (duration > 100) {
+      console.log("kinda slow", params)
+    }
     // See results here
     return result
   })
@@ -53,11 +56,11 @@ const createPrisma = (readonly: boolean) => {
 }
 
 export const prismaPrimary = /* @__PURE__ */ singleton("prisma-primary", () =>
-  createPrisma(false)
+  createPrisma(false),
 )
 
 export const prismaRead = /* @__PURE__ */ singleton("prisma-read", () =>
-  createPrisma(true)
+  createPrisma(true),
 )
 
 export * from "@prisma/client"
