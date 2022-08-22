@@ -26,6 +26,7 @@ module.exports = {
   env: {
     APP_DESCRIPTION: pkg.description,
   },
+  output: "standalone",
   experimental: {
     scrollRestoration: true,
   },

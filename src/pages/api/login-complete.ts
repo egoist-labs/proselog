@@ -2,7 +2,7 @@ import { NextApiHandler } from "next"
 import { z } from "zod"
 import { generateCookie } from "~/lib/auth.server"
 import { IS_PROD } from "~/lib/constants"
-import { prisma } from "~/lib/db.server"
+import { prismaPrimary } from "~/lib/db.server"
 import { OUR_DOMAIN } from "~/lib/env"
 
 const pathAndSearch = (pathname: string, search: string) => {
@@ -28,7 +28,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   // Set cookie again for custom domain and subdomain.localhost (because *.localhost in cookie domain doesn't work)
   if (isCustomDomain || !IS_PROD) {
-    const accessToken = await prisma.accessToken.findUnique({
+    const accessToken = await prismaPrimary.accessToken.findUnique({
       where: {
         publicId: data.id,
       },
@@ -42,7 +42,7 @@ const handler: NextApiHandler = async (req, res) => {
       throw new Error("invalid id or id expired")
     }
 
-    await prisma.accessToken.update({
+    await prismaPrimary.accessToken.update({
       where: {
         id: accessToken.id,
       },
