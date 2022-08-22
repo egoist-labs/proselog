@@ -183,6 +183,7 @@ export const siteRouter = createRouter()
         path: `/site/{site}`,
         method: "PATCH",
         summary: `Update a site`,
+        protect: true,
       },
     },
     input: z.object({
@@ -229,6 +230,7 @@ export const siteRouter = createRouter()
         path: `/site`,
         method: "POST",
         summary: `Create a site`,
+        protect: true,
       },
     },
     input: z.object({
@@ -275,6 +277,7 @@ export const siteRouter = createRouter()
         path: `/site/{siteId}/unsubscribe`,
         method: "POST",
         summary: `Unsubscribe to a site`,
+        protect: true,
       },
     },
     input: z.object({
