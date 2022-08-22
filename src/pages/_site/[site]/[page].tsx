@@ -21,14 +21,14 @@ export const getServerSideProps: GetServerSideProps = serverSidePropsHandler(
     const ssg = createSSGHelpers({ router: appRouter, ctx: trpcContext })
 
     await Promise.all([
-      ssg.fetchQuery("site", { site: domainOrSubdomain }),
+      ssg.fetchQuery("site.site", { site: domainOrSubdomain }),
       ssg.fetchQuery("site.page", {
         site: domainOrSubdomain,
         page: pageSlug,
         render: true,
         includeAuthors: true,
       }),
-      ssg.fetchQuery("site.subscription", { site: domainOrSubdomain }),
+      ssg.fetchQuery("site.my-subscription", { site: domainOrSubdomain }),
     ])
 
     const trpcState = ssg.dehydrate()
@@ -54,11 +54,11 @@ function SitePagePage({
   pageSlug: string
 }) {
   const { data: site } = trpc.useQuery(
-    ["site", { site: domainOrSubdomain }],
+    ["site.site", { site: domainOrSubdomain }],
     {},
   )
   const { data: subscription } = trpc.useQuery([
-    "site.subscription",
+    "site.my-subscription",
     { site: domainOrSubdomain },
   ])
   const { data: page } = trpc.useQuery([

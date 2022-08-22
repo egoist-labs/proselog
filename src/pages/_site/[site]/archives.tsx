@@ -20,9 +20,9 @@ export const getServerSideProps: GetServerSideProps = serverSidePropsHandler(
     const ssg = createSSGHelpers({ router: appRouter, ctx: trpcContext })
 
     await Promise.all([
-      ssg.fetchQuery("site", { site: domainOrSubdomain }),
+      ssg.fetchQuery("site.site", { site: domainOrSubdomain }),
       ssg.fetchQuery("site.pages", { site: domainOrSubdomain, take: 1000 }),
-      ssg.fetchQuery("site.subscription", { site: domainOrSubdomain }),
+      ssg.fetchQuery("site.my-subscription", { site: domainOrSubdomain }),
     ])
 
     return {
@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = serverSidePropsHandler(
         trpcState: ssg.dehydrate(),
       },
     }
-  }
+  },
 )
 
 function SiteArchivesPage({
@@ -42,9 +42,12 @@ function SiteArchivesPage({
   viewer: Viewer | null
   domainOrSubdomain: string
 }) {
-  const siteResult = trpc.useQuery(["site", { site: domainOrSubdomain }], {})
+  const siteResult = trpc.useQuery(
+    ["site.site", { site: domainOrSubdomain }],
+    {},
+  )
   const subscriptionResult = trpc.useQuery([
-    "site.subscription",
+    "site.my-subscription",
     { site: domainOrSubdomain },
   ])
   const postsResult = trpc.useQuery([

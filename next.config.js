@@ -26,11 +26,10 @@ module.exports = {
   env: {
     APP_DESCRIPTION: pkg.description,
   },
+  output: "standalone",
   experimental: {
     scrollRestoration: true,
-    outputStandalone: true,
   },
-
   webpack(config) {
     config.plugins.push(new UnoCSS())
     return config

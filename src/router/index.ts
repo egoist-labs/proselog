@@ -1,4 +1,5 @@
 import * as trpc from "@trpc/server"
+import { OpenApiMeta } from "trpc-openapi"
 import { z, ZodError } from "zod"
 import { isNotFoundError } from "~/lib/server-side-props"
 import { TRPCContext } from "~/lib/trpc.server"
@@ -10,32 +11,7 @@ import { siteRouter } from "./site"
 import { userRouter } from "./user"
 
 export const appRouter = trpc
-  .router<TRPCContext>()
-  .query("site", {
-    input: z.object({
-      site: z.string(),
-    }),
-    output: z.object({
-      id: z.string(),
-      name: z.string(),
-      description: z.string().nullable(),
-      icon: z.string().nullable(),
-      subdomain: z.string(),
-      navigation: z
-        .array(
-          z.object({
-            id: z.string(),
-            label: z.string(),
-            url: z.string(),
-          })
-        )
-        .nullable(),
-    }),
-    async resolve({ input }) {
-      const site = await getSite(input.site)
-      return site
-    },
-  })
+  .router<TRPCContext, OpenApiMeta>()
   .merge("auth.", authRouter)
   .merge("site.", siteRouter)
   .merge("user.", userRouter)

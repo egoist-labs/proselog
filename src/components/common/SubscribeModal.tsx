@@ -48,7 +48,7 @@ export const SubscribeModal: React.FC<{
     if (subscribe.isSuccess && isLoggedIn) {
       subscribe.reset()
       toast.success(subscription ? "Updated!" : "Subscribed!")
-      trpcContext.invalidateQueries("site.subscription")
+      trpcContext.invalidateQueries("site.my-subscription")
     }
   }, [subscribe, isLoggedIn, subscription, trpcContext])
 
@@ -56,7 +56,7 @@ export const SubscribeModal: React.FC<{
     if (unsubscribe.isSuccess) {
       unsubscribe.reset()
       toast.success("Unsubscribed!")
-      trpcContext.invalidateQueries("site.subscription")
+      trpcContext.invalidateQueries("site.my-subscription")
     }
   }, [unsubscribe, trpcContext])
 

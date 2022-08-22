@@ -1,0 +1,17 @@
+version: "3.9"
+
+volumes:
+  pg-data:
+
+services:
+  pg:
+    image: postgres:14-alpine
+    restart: always
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - pg-data:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"

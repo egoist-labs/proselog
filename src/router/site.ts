@@ -14,11 +14,57 @@ import {
   getPagesBySite,
   scheduleEmailForPost,
 } from "~/models/page.model"
+import { preprocess } from "~/lib/preprocess"
 
 export const siteRouter = createRouter()
-  .query("subscription", {
+  .query("site", {
+    meta: {
+      openapi: {
+        enabled: true,
+        method: "GET",
+        path: "/site/{site}",
+        description: `Get a single site`,
+      },
+    },
     input: z.object({
-      site: z.string(),
+      site: z.string({
+        description: `Subdomain or UUID`,
+      }),
+    }),
+    output: z.object({
+      id: z.string(),
+      name: z.string(),
+      description: z.string().nullable(),
+      icon: z.string().nullable(),
+      subdomain: z.string(),
+      navigation: z
+        .array(
+          z.object({
+            id: z.string(),
+            label: z.string(),
+            url: z.string(),
+          }),
+        )
+        .nullable(),
+    }),
+    async resolve({ input }) {
+      const site = await getSite(input.site)
+      return site
+    },
+  })
+  .query("my-subscription", {
+    meta: {
+      openapi: {
+        enabled: true,
+        path: `/site/{site}/my-subscription`,
+        method: "GET",
+        description: `Get the subscription for current viewer`,
+      },
+    },
+    input: z.object({
+      site: z.string({
+        description: `Site UUID or subdomain`,
+      }),
     }),
     output: z
       .object({
@@ -37,21 +83,29 @@ export const siteRouter = createRouter()
     },
   })
   .query("pages", {
+    meta: {
+      openapi: {
+        enabled: true,
+        path: `/site/{site}/pages`,
+        method: "GET",
+        description: `Get pages for a site`,
+      },
+    },
     input: z.object({
       site: z.string(),
       type: z.enum(["post", "page"]).default("post"),
       visibility: z
         .enum([
           PageVisibilityEnum.All,
-          PageVisibilityEnum.Published,
           PageVisibilityEnum.Draft,
+          PageVisibilityEnum.Published,
           PageVisibilityEnum.Scheduled,
         ])
-        .nullish(),
-      take: z.number().optional(),
+        .optional(),
+      take: preprocess(z.number().int()).optional(),
       cursor: z.string().optional(),
-      includeContent: z.boolean().optional(),
-      includeExcerpt: z.boolean().optional(),
+      includeContent: preprocess(z.boolean()).optional(),
+      includeExcerpt: preprocess(z.boolean()).optional(),
     }),
     output: z.object({
       nodes: z.array(
@@ -75,11 +129,19 @@ export const siteRouter = createRouter()
     },
   })
   .query("page", {
+    meta: {
+      openapi: {
+        enabled: true,
+        path: `/site/{site}/page/{page}`,
+        method: "GET",
+        description: `Get a single page from a site`,
+      },
+    },
     input: z.object({
       site: z.string(),
       page: z.string(),
-      render: z.boolean(),
-      includeAuthors: z.boolean().optional(),
+      render: preprocess(z.boolean()),
+      includeAuthors: preprocess(z.boolean()).optional(),
     }),
     output: z.object({
       id: z.string(),
@@ -114,7 +176,15 @@ export const siteRouter = createRouter()
       return page
     },
   })
-  .mutation("updateSite", {
+  .mutation("update", {
+    meta: {
+      openapi: {
+        enabled: true,
+        path: `/site/{site}`,
+        method: "PATCH",
+        description: `Update a site`,
+      },
+    },
     input: z.object({
       site: z.string(),
       name: z.string().optional(),
@@ -152,8 +222,15 @@ export const siteRouter = createRouter()
       }
     },
   })
-
   .mutation("create", {
+    meta: {
+      openapi: {
+        enabled: true,
+        path: `/site`,
+        method: "POST",
+        description: `Create a site`,
+      },
+    },
     input: z.object({
       name: z.string(),
       subdomain: z.string().min(3).max(26),
@@ -168,6 +245,14 @@ export const siteRouter = createRouter()
     },
   })
   .mutation("subscribe", {
+    meta: {
+      openapi: {
+        enabled: true,
+        path: `/site/{siteId}/subscribe`,
+        method: "POST",
+        description: `Subscribe to a site`,
+      },
+    },
     input: z.object({
       email: z.boolean().optional(),
       siteId: z.string(),
@@ -178,14 +263,24 @@ export const siteRouter = createRouter()
         })
         .optional(),
     }),
+    output: z.void(),
     async resolve({ input, ctx }) {
       await subscribeToSite(ctx.gate, input)
     },
   })
   .mutation("unsubscribe", {
+    meta: {
+      openapi: {
+        enabled: true,
+        path: `/site/{siteId}/unsubscribe`,
+        method: "POST",
+        description: `Unsubscribe to a site`,
+      },
+    },
     input: z.object({
       siteId: z.string(),
     }),
+    output: z.void(),
     async resolve({ input, ctx }) {
       await unsubscribeFromSite(ctx.gate, input)
     },

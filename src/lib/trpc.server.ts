@@ -1,5 +1,6 @@
 import * as trpc from "@trpc/server"
 import { IncomingMessage } from "http"
+import { OpenApiMeta } from "trpc-openapi"
 import { AuthUser, getAuthUser } from "./auth.server"
 import { createGate, Gate } from "./gate.server"
 
@@ -19,5 +20,5 @@ export const getTRPCContext = async ({
 }
 
 export const createRouter = () => {
-  return trpc.router<TRPCContext>()
+  return trpc.router<TRPCContext, OpenApiMeta>()
 }

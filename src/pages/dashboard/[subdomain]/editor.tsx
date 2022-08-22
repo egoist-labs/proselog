@@ -36,7 +36,7 @@ export default function SubdomainEditor() {
   const isPost = router.query.type === "post"
   const pageId = router.query.id as string | undefined
   const trpcContext = trpc.useContext()
-  const siteResult = trpc.useQuery(["site", { site: subdomain }], {
+  const siteResult = trpc.useQuery(["site.site", { site: subdomain }], {
     enabled: !!subdomain,
   })
   const { data: page, refetch: refetchPage } = trpc.useQuery(

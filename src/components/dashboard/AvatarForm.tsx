@@ -20,7 +20,7 @@ const AvatarEditorModal: React.FC<{
   const [isSaving, setIsSaving] = useState(false)
   const ctx = trpc.useContext()
   const updateProfile = trpc.useMutation("user.updateProfile")
-  const updateSite = trpc.useMutation("site.updateSite")
+  const updateSite = trpc.useMutation("site.update")
 
   const cropAndSave = async () => {
     if (!editorRef.current) return

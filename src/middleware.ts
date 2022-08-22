@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import { IS_PROD } from "~/lib/constants"
 import { DISCORD_LINK } from "~/lib/env"
-import { FLY_REGION, IS_PRIMARY_REGION, PRIMARY_REGION } from "~/lib/env.server"
+import {
+  AUTH_COOKIE_NAME,
+  FLY_REGION,
+  IS_PRIMARY_REGION,
+  PRIMARY_REGION,
+} from "~/lib/env.server"
 import { getTenant } from "~/lib/tenant.server"
 
 const METHODS_TO_NOT_REPLAY = ["GET", "HEAD", "OPTIONS"]
@@ -16,7 +21,22 @@ export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
   if (pathname === "/favicon.ico") {
-    return new Response(null, { status: 404 })
+    const url = req.nextUrl.clone()
+    url.pathname = "/404"
+    return NextResponse.rewrite(url)
+  }
+
+  // Redirect unauthenticated users to the home page
+  if (pathname === "/dashboard" || pathname.startsWith("/dashboard/")) {
+    if (!req.cookies.has(AUTH_COOKIE_NAME)) {
+      const url = req.nextUrl.clone()
+      url.pathname = "/"
+      return NextResponse.redirect(url)
+    }
+  }
+
+  if (pathname.startsWith("/_next/")) {
+    return NextResponse.next()
   }
 
   console.log(`${req.method} ${req.nextUrl.pathname}${req.nextUrl.search}`)
@@ -32,7 +52,9 @@ export default function middleware(req: NextRequest) {
       FLY_REGION,
       url: req.url,
     })
-    return new Response("replayed", {
+    const url = req.nextUrl.clone()
+    url.pathname = "/empty"
+    return NextResponse.rewrite(url, {
       headers: {
         "fly-replay": `region=${PRIMARY_REGION}`,
       },
