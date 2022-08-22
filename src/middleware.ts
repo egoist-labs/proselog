@@ -53,7 +53,7 @@ export default function middleware(req: NextRequest) {
       url: req.url,
     })
     const url = req.nextUrl.clone()
-    url.pathname = "/empty"
+    url.pathname = "/_empty.html"
     return NextResponse.rewrite(url, {
       headers: {
         "fly-replay": `region=${PRIMARY_REGION}`,
