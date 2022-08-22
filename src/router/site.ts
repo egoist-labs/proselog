@@ -23,7 +23,7 @@ export const siteRouter = createRouter()
         enabled: true,
         method: "GET",
         path: "/site/{site}",
-        description: `Get a single site`,
+        summary: `Get a single site`,
       },
     },
     input: z.object({
@@ -58,7 +58,7 @@ export const siteRouter = createRouter()
         enabled: true,
         path: `/site/{site}/my-subscription`,
         method: "GET",
-        description: `Get the subscription for current viewer`,
+        summary: `Get the subscription for current viewer`,
       },
     },
     input: z.object({
@@ -88,7 +88,7 @@ export const siteRouter = createRouter()
         enabled: true,
         path: `/site/{site}/pages`,
         method: "GET",
-        description: `Get pages for a site`,
+        summary: `Get pages for a site`,
       },
     },
     input: z.object({
@@ -134,7 +134,7 @@ export const siteRouter = createRouter()
         enabled: true,
         path: `/site/{site}/page/{page}`,
         method: "GET",
-        description: `Get a single page from a site`,
+        summary: `Get a single page from a site`,
       },
     },
     input: z.object({
@@ -182,7 +182,7 @@ export const siteRouter = createRouter()
         enabled: true,
         path: `/site/{site}`,
         method: "PATCH",
-        description: `Update a site`,
+        summary: `Update a site`,
       },
     },
     input: z.object({
@@ -228,7 +228,7 @@ export const siteRouter = createRouter()
         enabled: true,
         path: `/site`,
         method: "POST",
-        description: `Create a site`,
+        summary: `Create a site`,
       },
     },
     input: z.object({
@@ -250,7 +250,7 @@ export const siteRouter = createRouter()
         enabled: true,
         path: `/site/{siteId}/subscribe`,
         method: "POST",
-        description: `Subscribe to a site`,
+        summary: `Subscribe to a site`,
       },
     },
     input: z.object({
@@ -274,7 +274,7 @@ export const siteRouter = createRouter()
         enabled: true,
         path: `/site/{siteId}/unsubscribe`,
         method: "POST",
-        description: `Unsubscribe to a site`,
+        summary: `Unsubscribe to a site`,
       },
     },
     input: z.object({
