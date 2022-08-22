@@ -5,11 +5,6 @@ on:
       - main
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-  NEXT_PUBLIC_APP_NAME: Proselog
-  NEXT_PUBLIC_OUR_DOMAIN: proselog.com
-  NEXT_PUBLIC_R2_URL: r2.proselog.com
-  NEXT_PUBLIC_DISCORD_LINK: https://discord.gg/ucBPN7brXf
-  NEXT_PUBLIC_GITHUB_LINK: https://github.com/proselog/proselog
 jobs:
   deploy:
     name: Deploy app
