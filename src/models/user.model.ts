@@ -1,4 +1,4 @@
-import { prismaPrimary } from "~/lib/db.server"
+import { prisma } from "~/lib/db.server"
 import { Gate } from "~/lib/gate.server"
 import { checkReservedWords } from "~/lib/reserved-words"
 
@@ -11,12 +11,12 @@ export const userModel = {
       avatar?: string
       bio?: string
       email?: string
-    }
+    },
   ) {
     const user = gate.getUser(true)
 
     if (payload.email) {
-      const userByEmail = await prismaPrimary.user.findUnique({
+      const userByEmail = await prisma.user.findUnique({
         where: {
           email: payload.email,
         },
@@ -29,7 +29,7 @@ export const userModel = {
     if (payload.username) {
       checkReservedWords(payload.username)
 
-      const userByUsername = await prismaPrimary.user.findUnique({
+      const userByUsername = await prisma.user.findUnique({
         where: {
           username: payload.username,
         },
@@ -39,7 +39,7 @@ export const userModel = {
       }
     }
 
-    const updated = await prismaPrimary.user.update({
+    const updated = await prisma.user.update({
       where: {
         id: user.id,
       },

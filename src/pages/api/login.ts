@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { prismaPrimary } from "~/lib/db.server"
+import { prisma } from "~/lib/db.server"
 import { nanoid } from "nanoid"
 import UAParser from "ua-parser-js"
 import dayjs from "dayjs"
@@ -27,7 +27,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   const payload = await decryptLoginToken(data.token)
 
-  let user = await prismaPrimary.user.findUnique({
+  let user = await prisma.user.findUnique({
     where:
       payload.type === "unsubscribe"
         ? {
@@ -45,7 +45,7 @@ const handler: NextApiHandler = async (req, res) => {
     if (payload.type === "unsubscribe") {
       throw new Error("User not found")
     } else {
-      user = await prismaPrimary.user.create({
+      user = await prisma.user.create({
         data: {
           email: payload.email,
           name: payload.email.split("@")[0],
@@ -70,7 +70,7 @@ const handler: NextApiHandler = async (req, res) => {
   const ua = new UAParser(data.userAgent)
 
   const publicId = nanoid(32)
-  const accessToken = await prismaPrimary.accessToken.create({
+  const accessToken = await prisma.accessToken.create({
     data: {
       user: {
         connect: {
@@ -100,7 +100,7 @@ const handler: NextApiHandler = async (req, res) => {
   // Custom domain
   if (nextUrl.host !== OUR_DOMAIN && !nextUrl.host.endsWith(`.${OUR_DOMAIN}`)) {
     // Check if the host belong to a site
-    // const existing = await prismaPrimary.domain.findUnique({
+    // const existing = await prisma.domain.findUnique({
     //   where: {
     //     domain: nextUrl.hostname,
     //   },

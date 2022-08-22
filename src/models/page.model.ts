@@ -1,8 +1,7 @@
 import { nanoid } from "nanoid"
 import {
-  prismaPrimary,
+  prisma,
   Prisma,
-  prismaRead,
   MembershipRole,
   PageEmailStatus,
 } from "~/lib/db.server"
@@ -28,7 +27,7 @@ const checkPageSlug = async ({
     throw new Error("Missing page slug")
   }
 
-  const page = await prismaPrimary.page.findFirst({
+  const page = await prisma.page.findFirst({
     where: {
       siteId,
       slug,
@@ -40,7 +39,7 @@ const checkPageSlug = async ({
   if (!page) return
 
   if (page.deletedAt) {
-    await prismaPrimary.page.delete({
+    await prisma.page.delete({
       where: {
         id: page.id,
       },
@@ -68,7 +67,7 @@ export async function createOrUpdatePage(
 ) {
   const user = gate.getUser(true)
   const page = input.pageId
-    ? await prismaPrimary.page.findUnique({
+    ? await prisma.page.findUnique({
         where: {
           id: input.pageId,
         },
@@ -76,7 +75,7 @@ export async function createOrUpdatePage(
           site: true,
         },
       })
-    : await prismaPrimary.page.create({
+    : await prisma.page.create({
         data: {
           title: "Untitled",
           slug: `untitled-${nanoid(4)}`,
@@ -120,7 +119,7 @@ export async function createOrUpdatePage(
     ? await renderPageContent(input.content)
     : undefined
 
-  const updated = await prismaPrimary.page.update({
+  const updated = await prisma.page.update({
     where: {
       id: page.id,
     },
@@ -153,7 +152,7 @@ export async function scheduleEmailForPost(
     throw new Error("Email already scheduled or sent")
   }
 
-  await prismaPrimary.page.update({
+  await prisma.page.update({
     where: {
       id: page.id,
     },
@@ -211,7 +210,7 @@ export async function getPagesBySite(
 
   const take = input.take || 100
   const [nodes, total] = await Promise.all([
-    prismaRead.page.findMany({
+    prisma.page.findMany({
       where,
       orderBy: {
         publishedAt: "desc",
@@ -223,7 +222,7 @@ export async function getPagesBySite(
           }
         : undefined,
     }),
-    await prismaRead.page.count({
+    await prisma.page.count({
       where,
     }),
   ])
@@ -261,7 +260,7 @@ export async function getPagesBySite(
 }
 
 export async function deletePage(gate: Gate, { id }: { id: string }) {
-  const page = await prismaPrimary.page.findUnique({
+  const page = await prisma.page.findUnique({
     where: {
       id,
     },
@@ -275,7 +274,7 @@ export async function deletePage(gate: Gate, { id }: { id: string }) {
     throw gate.permissionError()
   }
 
-  await prismaPrimary.page.update({
+  await prisma.page.update({
     where: {
       id: page.id,
     },
@@ -307,7 +306,7 @@ export async function getPage<TRender extends boolean = false>(
   }
 
   const page = isPageUUID
-    ? await prismaRead.page.findUnique({
+    ? await prisma.page.findUnique({
         where: {
           id: input.page,
         },
@@ -316,7 +315,7 @@ export async function getPage<TRender extends boolean = false>(
         },
       })
     : site
-    ? await prismaRead.page.findFirst({
+    ? await prisma.page.findFirst({
         where: { siteId: site.id, slug: input.page },
         include: {
           authors: input.includeAuthors,
@@ -373,7 +372,7 @@ export const notifySubscribersForNewPost = async (
     throw gate.permissionError()
   }
 
-  await prismaPrimary.page.update({
+  await prisma.page.update({
     where: {
       id: page.id,
     },
@@ -382,7 +381,7 @@ export const notifySubscribersForNewPost = async (
     },
   })
 
-  const memberships = await prismaPrimary.membership.findMany({
+  const memberships = await prisma.membership.findMany({
     where: {
       role: MembershipRole.SUBSCRIBER,
       siteId: site.id,
@@ -402,7 +401,7 @@ export const notifySubscribersForNewPost = async (
       site,
       subscribers: emailSubscribers,
     })
-    await prismaPrimary.page.update({
+    await prisma.page.update({
       where: {
         id: page.id,
       },
@@ -411,7 +410,7 @@ export const notifySubscribersForNewPost = async (
       },
     })
   } catch (error) {
-    await prismaPrimary.page.update({
+    await prisma.page.update({
       where: {
         id: page.id,
       },

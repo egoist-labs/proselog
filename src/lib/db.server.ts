@@ -26,8 +26,6 @@ const createPrisma = (readonly: boolean) => {
     url = url.replace(":5432", ":5433")
   }
 
-  console.log("connecting to", url)
-
   const client = new PrismaClient({
     log: logLevel,
     datasources: url
@@ -52,12 +50,8 @@ const createPrisma = (readonly: boolean) => {
   return client
 }
 
-export const prismaPrimary = /* @__PURE__ */ singleton("prisma-primary", () =>
-  createPrisma(false)
-)
-
-export const prismaRead = /* @__PURE__ */ singleton("prisma-read", () =>
-  createPrisma(true)
+export const prisma = /* @__PURE__ */ singleton("prisma", () =>
+  createPrisma(false),
 )
 
 export * from "@prisma/client"

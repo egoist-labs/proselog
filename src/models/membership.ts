@@ -1,12 +1,12 @@
 import { string } from "zod"
-import { prismaRead, MembershipRole, prismaPrimary } from "~/lib/db.server"
+import { prisma, MembershipRole } from "~/lib/db.server"
 
 export const getMembership = async (data: {
   siteId: string
   userId: string
   role: MembershipRole
 }) => {
-  const first = await prismaRead.membership.findFirst({
+  const first = await prisma.membership.findFirst({
     where: {
       role: data.role,
       userId: data.userId,
@@ -25,7 +25,7 @@ export const getMemberships = async ({
   userId: string
   canManage?: boolean
 }) => {
-  const memberships = await prismaRead.membership.findMany({
+  const memberships = await prisma.membership.findMany({
     where: {
       userId,
       role: canManage
@@ -44,9 +44,9 @@ export const getMemberships = async ({
 
 export const updateMembership = async (
   membershipId: string,
-  input: { lastSwitchedTo?: Date }
+  input: { lastSwitchedTo?: Date },
 ) => {
-  await prismaPrimary.membership.update({
+  await prisma.membership.update({
     where: {
       id: membershipId,
     },
