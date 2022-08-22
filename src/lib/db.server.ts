@@ -26,6 +26,8 @@ const createPrisma = (readonly: boolean) => {
     url = url.replace(":5432", ":5433")
   }
 
+  console.log("connecting to", url)
+
   const client = new PrismaClient({
     log: logLevel,
     datasources: url
@@ -43,6 +45,9 @@ const createPrisma = (readonly: boolean) => {
     const end = Date.now()
     const duration = Math.floor(end - now)
     console.log("query took", duration, "ms")
+    if (duration > 100) {
+      console.log("kinda slow", params)
+    }
     // See results here
     return result
   })
@@ -50,8 +55,12 @@ const createPrisma = (readonly: boolean) => {
   return client
 }
 
-export const prisma = /* @__PURE__ */ singleton("prisma", () =>
+export const prismaPrimary = /* @__PURE__ */ singleton("prisma-primary", () =>
   createPrisma(false),
+)
+
+export const prismaRead = /* @__PURE__ */ singleton("prisma-read", () =>
+  createPrisma(true),
 )
 
 export * from "@prisma/client"

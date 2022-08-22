@@ -9,6 +9,8 @@ declare interface CustomEnv {
   MAILGUN_APIKEY: string
   MAILGUN_DOMAIN_TRANSANCTION?: string
   MAILGUN_DOMAIN_NEWSLETTER?: string
+  FLY_REGION?: string
+  PRIMARY_REGION?: string
   ENCRYPT_SECRET: string
 }
 

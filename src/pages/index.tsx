@@ -1,7 +1,10 @@
 import { GetServerSideProps } from "next"
+import { useEffect } from "react"
+import { DashboardIcon } from "~/components/icons/DashboardIcon"
 import { MainLayout } from "~/components/main/MainLayout"
 import { UniLink } from "~/components/ui/UniLink"
 import { getAuthUser } from "~/lib/auth.server"
+import { FLY_REGION } from "~/lib/env.server"
 import { useStore } from "~/lib/store"
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -11,12 +14,23 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       isLoggedIn,
+      region: FLY_REGION,
     },
   }
 }
 
-export default function Home({ isLoggedIn }: { isLoggedIn: boolean }) {
+export default function Home({
+  isLoggedIn,
+  region,
+}: {
+  isLoggedIn: boolean
+  region: string | null
+}) {
   const setLoginModalOpened = useStore((store) => store.setLoginModalOpened)
+
+  useEffect(() => {
+    console.log("-> region", region)
+  }, [region])
 
   return (
     <MainLayout isLoggedIn={isLoggedIn}>
