@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server"
 import { MembershipRole, type Site, type Page } from "~/lib/db.server"
 import type { AuthUser } from "./auth.server"
 import { PageVisibilityEnum } from "./types"
@@ -138,8 +139,11 @@ export const createGate = <TRequiredAuth extends boolean | undefined>({
 
       return false
     },
-    permissionError(message = "not allowed") {
-      return new Error(message)
+    permissionError(message = "unauthorized") {
+      return new TRPCError({
+        message,
+        code: "UNAUTHORIZED",
+      })
     },
   }
 }

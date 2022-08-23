@@ -39,10 +39,7 @@ const findUserFromToken = async (token: string) => {
   return accessToken?.user
 }
 
-export const getAuthUser = async <TRequireAuth extends boolean | undefined>(
-  request: IncomingMessage,
-  requireAuth?: TRequireAuth
-) => {
+export const getAuthUser = async (request: IncomingMessage) => {
   const token = getAuthTokenFromRequest(request)
 
   let user: AuthUser | null | undefined = null
@@ -51,13 +48,7 @@ export const getAuthUser = async <TRequireAuth extends boolean | undefined>(
     user = await findUserFromToken(token)
   }
 
-  if (!user && requireAuth) {
-    throw new Error("require auth")
-  }
-
-  return user as TRequireAuth extends true
-    ? AuthUser
-    : AuthUser | null | undefined
+  return user
 }
 
 export const getAuthCookieOptions = ({
@@ -80,18 +71,18 @@ export const getAuthCookieOptions = ({
 export const generateCookie = (
   options:
     | { type: "clear"; domain?: string }
-    | { type: "auth"; token: string; domain?: string }
+    | { type: "auth"; token: string; domain?: string },
 ) => {
   if (options.type === "clear") {
     return Cookie.serialize(
       AUTH_COOKIE_NAME,
       "",
-      getAuthCookieOptions({ domain: options.domain, clearCookie: true })
+      getAuthCookieOptions({ domain: options.domain, clearCookie: true }),
     )
   }
   return Cookie.serialize(
     AUTH_COOKIE_NAME,
     options.token,
-    getAuthCookieOptions({ domain: options.domain })
+    getAuthCookieOptions({ domain: options.domain }),
   )
 }
