@@ -37,6 +37,9 @@ export const getMemberships = async ({
     include: {
       site: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   })
 
   return memberships
@@ -44,7 +47,7 @@ export const getMemberships = async ({
 
 export const updateMembership = async (
   membershipId: string,
-  input: { lastSwitchedTo?: Date }
+  input: { lastSwitchedTo?: Date },
 ) => {
   await prismaPrimary.membership.update({
     where: {
