@@ -41,6 +41,7 @@
     "mdast-util-to-string": "^3.1.0",
     "nanoid": "^3.3.3",
     "next": "^12.2.5",
+    "nextjs-cors": "^2.1.1",
     "pica": "^9.0.1",
     "posthtml": "^0.16.6",
     "prismjs": "^1.28.0",
