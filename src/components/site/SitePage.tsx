@@ -18,7 +18,7 @@ export const SitePage: React.FC<{
         {page.type === "POST" ? (
           <h2 className="text-4xl font-bold">{page.title}</h2>
         ) : (
-          <h2 className="text-xl font-bold page-title">{page.title}</h2>
+          <h2 className="text-4xl font-bold">{page.title}</h2>
         )}
         {page.type === "POST" && (
           <PostMeta

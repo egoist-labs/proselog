@@ -23,7 +23,7 @@ export const PagesManager: React.FC<{
       router.query.visibility
         ? (router.query.visibility as PageVisibilityEnum)
         : PageVisibilityEnum.All,
-    [router.query.visibility]
+    [router.query.visibility],
   )
   const deletePage = trpc.useMutation("page.delete")
   const trpcContext = trpc.useContext()
@@ -48,7 +48,7 @@ export const PagesManager: React.FC<{
     ],
     {
       enabled: !!subdomain,
-    }
+    },
   )
   const pages = pagesResult.data?.nodes
 
@@ -151,11 +151,11 @@ export const PagesManager: React.FC<{
           className={clsx(
             `space-x-2 px-3 h-9 inline-flex items-center justify-center text-white rounded-lg text-sm`,
 
-            isPost ? `bg-pink-500` : `bg-blue-500`
+            isPost ? `bg-pink-500` : `bg-blue-500`,
           )}
           onClick={() =>
             router.push(
-              `/dashboard/${subdomain}/editor?type=${isPost ? "post" : "page"}`
+              `/dashboard/${subdomain}/editor?type=${isPost ? "post" : "page"}`,
             )
           }
         >
@@ -205,7 +205,7 @@ export const PagesManager: React.FC<{
                           <button
                             className={clsx(
                               `text-gray-400 relative z-50 w-8 h-8 rounded inline-flex invisible group-hover:visible justify-center items-center`,
-                              open ? `bg-gray-200` : `hover:bg-gray-200`
+                              open ? `bg-gray-200` : `hover:bg-gray-200`,
                             )}
                             onClick={(e) => {
                               e.stopPropagation()

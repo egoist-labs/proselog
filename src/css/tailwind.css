@@ -9,7 +9,7 @@
 }
 
 body {
-  @apply antialiased break-words;
+  @apply break-words;
 }
 
 .container {
@@ -22,12 +22,12 @@ body {
   @apply items-center;
   @apply justify-center;
   @apply h-8;
-  @apply px-3;
-  @apply min-w-[100px];
+  @apply px-4;
   @apply shadow-button;
   @apply whitespace-nowrap;
   @apply font-medium;
   @apply transition-colors;
+  @apply text-sm;
 }
 
 .button.is-auto-width {
@@ -173,10 +173,4 @@ textarea.input {
 
 .post-status-circle.is-scheduled {
   @apply bg-yellow-500;
-}
-
-.page-title {
-  @apply relative;
-  @apply text-3xl;
-  @apply font-extrabold;
 }

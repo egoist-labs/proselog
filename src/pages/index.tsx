@@ -36,7 +36,7 @@ export default function Home({
     <MainLayout isLoggedIn={isLoggedIn}>
       <section>
         <div className="max-w-screen-md px-5 mx-auto">
-          <div className="bg-zinc-50 rounded-xl p-10">
+          <div className="bg-zinc-50 rounded-lg p-10">
             <h2 className="text-5xl font-extrabold">
               Content Creating for
               <br />

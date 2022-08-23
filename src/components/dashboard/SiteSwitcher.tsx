@@ -20,11 +20,11 @@ export const SiteSwitcher: React.FC<Props> = ({
   viewer,
 }) => {
   const activeSubscription = subscriptions.find(
-    (s) => s.site.subdomain === subdomain
+    (s) => s.site.subdomain === subdomain,
   )
 
   const { mutate: updateMembership } = trpc.useMutation(
-    "membership.updateMembership"
+    "membership.updateMembership",
   )
 
   useEffect(() => {

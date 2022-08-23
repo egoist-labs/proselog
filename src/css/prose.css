@@ -1,5 +1,5 @@
 .prose {
-  @apply text-zinc-600 leading-normal;
+  @apply leading-normal;
 }
 
 .prose > p {
@@ -64,7 +64,7 @@
 }
 
 .prose .table-wrapper {
-  @apply min-w-full rounded-xl text-sm my-7 whitespace-nowrap overflow-auto;
+  @apply min-w-full rounded-lg text-sm my-7 whitespace-nowrap overflow-auto;
   @apply shadow-sm ring-1 ring-zinc-700 ring-opacity-10;
 }
 
@@ -99,7 +99,7 @@
 }
 
 .prose .callout {
-  @apply border border-indigo-100 bg-indigo-50 text-indigo-700 rounded-xl p-5 md:p-8 font-normal;
+  @apply border border-indigo-100 bg-indigo-50 text-indigo-700 rounded-lg p-5 md:p-8 font-normal;
   @apply -mx-5 md:-mx-8 my-10;
 }
 
