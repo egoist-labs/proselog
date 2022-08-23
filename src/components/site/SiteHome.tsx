@@ -24,12 +24,12 @@ export const SiteHome: React.FC<{
                   <div className="text-sm text-zinc-400 mt-1">
                     {formatDate(post.publishedAt)}
                   </div>
-                  <div className="mt-3 text-lg">
+                  <div className="mt-3 text-lg text-zinc-500">
                     {excerpt}
                     {excerpt && (
                       <span>
                         ...{" "}
-                        <span className="text-indigo-500 font-medium hover:text-indigo-600">
+                        <span className="text-indigo-400 hover:text-indigo-500">
                           Read more
                         </span>
                       </span>
