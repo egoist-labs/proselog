@@ -291,6 +291,7 @@ export const siteRouter = t.router({
           .optional(),
       }),
     )
+    .output(z.void())
     .mutation(async ({ ctx, input }) => {
       await subscribeToSite(ctx.gate, input)
     }),
@@ -310,6 +311,7 @@ export const siteRouter = t.router({
         siteId: z.string(),
       }),
     )
+    .output(z.void())
     .mutation(async ({ ctx, input }) => {
       await unsubscribeFromSite(ctx.gate, input)
     }),
