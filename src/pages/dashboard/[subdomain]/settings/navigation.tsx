@@ -70,12 +70,15 @@ export default function SiteSettingsNavigationPage() {
 
   const subdomain = router.query.subdomain as string
   const trpcContext = trpc.useContext()
-  const siteResult = trpc.useQuery(["site.site", { site: subdomain }], {
-    enabled: !!subdomain,
-    refetchOnWindowFocus: false,
-  })
+  const siteResult = trpc.site.site.useQuery(
+    { site: subdomain },
+    {
+      enabled: !!subdomain,
+      refetchOnWindowFocus: false,
+    },
+  )
 
-  const updateSite = trpc.useMutation("site.update")
+  const updateSite = trpc.site.update.useMutation()
 
   const [items, setItems] = useState<SiteNavigationItem[]>([])
 
@@ -121,7 +124,7 @@ export default function SiteSettingsNavigationPage() {
     if (updateSite.isSuccess) {
       updateSite.reset()
       toast.success("Saved")
-      trpcContext.invalidateQueries(["site.site", { site: subdomain }])
+      trpcContext.invalidate()
     }
   }, [updateSite, trpcContext, subdomain])
 

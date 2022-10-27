@@ -35,14 +35,19 @@ export default function SubdomainEditor() {
   const subdomain = router.query.subdomain as string
   const isPost = router.query.type === "post"
   const pageId = router.query.id as string | undefined
-  const trpcContext = trpc.useContext()
-  const siteResult = trpc.useQuery(["site.site", { site: subdomain }], {
-    enabled: !!subdomain,
-  })
-  const { data: page, refetch: refetchPage } = trpc.useQuery(
-    ["site.page", { page: pageId!, site: subdomain, render: false }],
+
+  const siteResult = trpc.site.site.useQuery(
+    { site: subdomain },
     {
-      enabled: !!pageId,
+      enabled: Boolean(subdomain),
+    },
+  )
+
+  const shouldFetchPage = Boolean(pageId && subdomain)
+  const { data: page, refetch: refetchPage } = trpc.site.page.useQuery(
+    { page: pageId!, site: subdomain, render: false },
+    {
+      enabled: shouldFetchPage,
     },
   )
   const pageContent = useMemo(() => page?.content, [page?.content])
@@ -58,7 +63,7 @@ export default function SubdomainEditor() {
     data: createOrUpdatePageResult,
     error: createOrUpdatePageError,
     reset: resetCreateOrUpdatePage,
-  } = trpc.useMutation("page.createOrUpdate")
+  } = trpc.page.createOrUpdate.useMutation()
   const uploadFile = useUploadFile()
   const [emailPostModalOpened, setEmailPostModalOpened] = useStore((store) => [
     store.emailPostModalOpened,
@@ -140,7 +145,9 @@ export default function SubdomainEditor() {
     if (createOrUpdatePageStatus === "success") {
       resetCreateOrUpdatePage()
       toast.success(values.published ? "Updated" : "Saved!")
-      trpcContext.invalidateQueries("site.page")
+      if (shouldFetchPage) {
+        refetchPage()
+      }
       router.replace(
         `/dashboard/${subdomain}/editor?id=${
           createOrUpdatePageResult.id
@@ -154,8 +161,9 @@ export default function SubdomainEditor() {
     isPost,
     router,
     subdomain,
-    trpcContext,
+    refetchPage,
     values.published,
+    shouldFetchPage,
   ])
 
   useEffect(() => {
@@ -188,10 +196,10 @@ export default function SubdomainEditor() {
   }, [pageContent])
 
   useEffect(() => {
-    if (!emailPostModalOpened) {
+    if (!emailPostModalOpened && shouldFetchPage) {
       refetchPage()
     }
-  }, [refetchPage, emailPostModalOpened])
+  }, [refetchPage, emailPostModalOpened, shouldFetchPage])
 
   return (
     <>

@@ -14,13 +14,16 @@ export default function SiteSettingsGeneralPage() {
 
   const subdomain = router.query.subdomain as string
 
-  const siteResult = trpc.useQuery(["site.site", { site: subdomain }], {
-    enabled: !!subdomain,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-  })
+  const siteResult = trpc.site.site.useQuery(
+    { site: subdomain },
+    {
+      enabled: !!subdomain,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    },
+  )
   const site = siteResult.data
-  const updateSite = trpc.useMutation("site.update")
+  const updateSite = trpc.site.update.useMutation()
 
   const form = useForm({
     defaultValues: {

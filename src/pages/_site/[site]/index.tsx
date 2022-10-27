@@ -3,7 +3,7 @@ import { SiteHome } from "~/components/site/SiteHome"
 import { SiteLayout } from "~/components/site/SiteLayout"
 import { getAuthUser } from "~/lib/auth.server"
 import { trpc } from "~/lib/trpc"
-import { createSSGHelpers } from "@trpc/react/ssg"
+import { createProxySSGHelpers } from "@trpc/react-query/ssg"
 import { appRouter } from "~/router"
 import { getTRPCContext } from "~/lib/trpc.server"
 import { Viewer } from "~/lib/types"
@@ -15,16 +15,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const viewer = getViewer(user)
   const trpcContext = await getTRPCContext(ctx)
-  const ssg = createSSGHelpers({ router: appRouter, ctx: trpcContext })
+  const ssg = createProxySSGHelpers({ router: appRouter, ctx: trpcContext })
 
   await Promise.all([
-    ssg.fetchQuery("site.site", { site: domainOrSubdomain }),
-    ssg.fetchQuery("site.pages", {
+    ssg.site.site.fetch({ site: domainOrSubdomain }),
+    ssg.site.pages.fetch({
       site: domainOrSubdomain,
       take: 1000,
       includeExcerpt: true,
     }),
-    ssg.fetchQuery("site.my-subscription", { site: domainOrSubdomain }),
+    ssg.site.mySubscription.fetch({ site: domainOrSubdomain }),
   ])
 
   return {
@@ -43,18 +43,18 @@ function SiteIndexPage({
   viewer: Viewer | null
   domainOrSubdomain: string
 }) {
-  const { data: site } = trpc.useQuery(
-    ["site.site", { site: domainOrSubdomain }],
+  const { data: site } = trpc.site.site.useQuery(
+    { site: domainOrSubdomain },
     {},
   )
-  const { data: subscription } = trpc.useQuery([
-    "site.my-subscription",
-    { site: domainOrSubdomain },
-  ])
-  const { data: posts } = trpc.useQuery([
-    "site.pages",
-    { site: domainOrSubdomain, take: 1000, includeExcerpt: true },
-  ])
+  const { data: subscription } = trpc.site.mySubscription.useQuery({
+    site: domainOrSubdomain,
+  })
+  const { data: posts } = trpc.site.pages.useQuery({
+    site: domainOrSubdomain,
+    take: 1000,
+    includeExcerpt: true,
+  })
 
   return (
     <SiteLayout site={site!} viewer={viewer} subscription={subscription}>

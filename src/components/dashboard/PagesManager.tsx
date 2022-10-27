@@ -25,27 +25,24 @@ export const PagesManager: React.FC<{
         : PageVisibilityEnum.All,
     [router.query.visibility],
   )
-  const deletePage = trpc.useMutation("page.delete")
+  const deletePage = trpc.page.delete.useMutation()
   const trpcContext = trpc.useContext()
 
   useEffect(() => {
     if (deletePage.isSuccess) {
       deletePage.reset()
       toast.success("Deleted!")
-      trpcContext.invalidateQueries("site.pages")
+      trpcContext.site.pages.invalidate()
     }
   }, [deletePage, trpcContext])
 
-  const pagesResult = trpc.useQuery(
-    [
-      "site.pages",
-      {
-        type: isPost ? "post" : "page",
-        site: subdomain!,
-        take: 1000,
-        visibility,
-      },
-    ],
+  const pagesResult = trpc.site.pages.useQuery(
+    {
+      type: isPost ? "post" : "page",
+      site: subdomain!,
+      take: 1000,
+      visibility,
+    },
     {
       enabled: !!subdomain,
     },
@@ -183,11 +180,11 @@ export const PagesManager: React.FC<{
 
         {pages?.map((page) => {
           return (
-            (<Link
+            <Link
               key={page.id}
               href={getPageEditLink(page)}
-              className="group relative hover:bg-zinc-100 rounded-lg py-3 px-3 transition-colors -mx-3 flex justify-between">
-
+              className="group relative hover:bg-zinc-100 rounded-lg py-3 px-3 transition-colors -mx-3 flex justify-between"
+            >
               <div>
                 <div className="flex items-center">
                   <span>{page.title}</span>
@@ -247,11 +244,10 @@ export const PagesManager: React.FC<{
                   )}
                 </Menu>
               </div>
-
-            </Link>)
-          );
+            </Link>
+          )
         })}
       </div>
     </DashboardMain>
-  );
+  )
 }

@@ -35,6 +35,7 @@ WORKDIR /app
 
 COPY --from=build /app/.next/standalone /app
 COPY --from=build /app/public /app/public
+COPY --from=build /app/next.config.js /app/next.config.js
 COPY --from=build /app/.next/static /app/.next/static
 
 CMD ["pnpm", "start"]

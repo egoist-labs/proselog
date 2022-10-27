@@ -16,7 +16,7 @@ export const LoginModal: React.FC = () => {
     status: requestLoginLinkStatus,
     data,
     error,
-  } = trpc.useMutation("auth.requestLoginLink")
+  } = trpc.auth.requestLoginLink.useMutation()
 
   const form = useForm({
     defaultValues: {
@@ -39,7 +39,7 @@ export const LoginModal: React.FC = () => {
     >
       <div className="p-5">
         {data && (
-          <div className="mb-5">
+          <div className="mb-5 bg-green-100 p-3 rounded-lg text-green-600 font-medium">
             We just emailed you with a link to log in, please check your inbox
             and spam folder in case you can{`'`}t find it.
           </div>

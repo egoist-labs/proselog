@@ -12,13 +12,16 @@ import { trpc } from "~/lib/trpc"
 export default function SettingsDomainsPage() {
   const router = useRouter()
   const subdomain = router.query.subdomain as string
-  const siteResult = trpc.useQuery(["site.site", { site: subdomain }], {
-    enabled: !!subdomain,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-  })
+  const siteResult = trpc.site.site.useQuery(
+    { site: subdomain },
+    {
+      enabled: !!subdomain,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    },
+  )
   const ctx = trpc.useContext()
-  const updateSite = trpc.useMutation("site.update")
+  const updateSite = trpc.site.update.useMutation()
 
   const form = useForm({
     defaultValues: {
@@ -37,7 +40,7 @@ export default function SettingsDomainsPage() {
     if (updateSite.isSuccess && updateSite.data) {
       toast.success("Saved!")
       updateSite.reset()
-      ctx.invalidateQueries()
+      ctx.invalidate()
       if (updateSite.data.subdomainUpdated) {
         router.replace(
           `/dashboard/${updateSite.data.site.subdomain}/settings/domains`,

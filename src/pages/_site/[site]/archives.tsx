@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next"
 import { SiteLayout } from "~/components/site/SiteLayout"
 import { getAuthUser } from "~/lib/auth.server"
 import { trpc } from "~/lib/trpc"
-import { createSSGHelpers } from "@trpc/react/ssg"
+import { createProxySSGHelpers } from "@trpc/react-query/ssg"
 import { appRouter } from "~/router"
 import { getTRPCContext } from "~/lib/trpc.server"
 import { serverSidePropsHandler } from "~/lib/server-side-props"
@@ -17,12 +17,12 @@ export const getServerSideProps: GetServerSideProps = serverSidePropsHandler(
     const domainOrSubdomain = ctx.params!.site as string
 
     const trpcContext = await getTRPCContext(ctx)
-    const ssg = createSSGHelpers({ router: appRouter, ctx: trpcContext })
+    const ssg = createProxySSGHelpers({ router: appRouter, ctx: trpcContext })
 
     await Promise.all([
-      ssg.fetchQuery("site.site", { site: domainOrSubdomain }),
-      ssg.fetchQuery("site.pages", { site: domainOrSubdomain, take: 1000 }),
-      ssg.fetchQuery("site.my-subscription", { site: domainOrSubdomain }),
+      ssg.site.site.fetch({ site: domainOrSubdomain }),
+      ssg.site.pages.fetch({ site: domainOrSubdomain, take: 1000 }),
+      ssg.site.mySubscription.fetch({ site: domainOrSubdomain }),
     ])
 
     return {
@@ -42,18 +42,14 @@ function SiteArchivesPage({
   viewer: Viewer | null
   domainOrSubdomain: string
 }) {
-  const siteResult = trpc.useQuery(
-    ["site.site", { site: domainOrSubdomain }],
-    {},
-  )
-  const subscriptionResult = trpc.useQuery([
-    "site.my-subscription",
-    { site: domainOrSubdomain },
-  ])
-  const postsResult = trpc.useQuery([
-    "site.pages",
-    { site: domainOrSubdomain, take: 1000 },
-  ])
+  const siteResult = trpc.site.site.useQuery({ site: domainOrSubdomain }, {})
+  const subscriptionResult = trpc.site.mySubscription.useQuery({
+    site: domainOrSubdomain,
+  })
+  const postsResult = trpc.site.pages.useQuery({
+    site: domainOrSubdomain,
+    take: 1000,
+  })
 
   const site = siteResult.data
   const subscription = subscriptionResult.data

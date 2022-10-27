@@ -23,9 +23,8 @@ export const SiteSwitcher: React.FC<Props> = ({
     (s) => s.site.subdomain === subdomain,
   )
 
-  const { mutate: updateMembership } = trpc.useMutation(
-    "membership.updateMembership",
-  )
+  const { mutate: updateMembership } =
+    trpc.membership.updateMembership.useMutation()
 
   useEffect(() => {
     if (activeSubscription?.id) {
@@ -71,11 +70,11 @@ export const SiteSwitcher: React.FC<Props> = ({
             <div className="p-2">
               {subscriptions?.map((subscription) => {
                 return (
-                  (<Link
+                  <Link
                     key={subscription.id}
                     href={`/dashboard/${subscription.site.subdomain}`}
-                    className="flex px-2 h-8 rounded-lg items-center justify-between hover:bg-zinc-100">
-
+                    className="flex px-2 h-8 rounded-lg items-center justify-between hover:bg-zinc-100"
+                  >
                     <span className="truncate w-8/12">
                       {subscription.site.name}
                     </span>
@@ -95,23 +94,21 @@ export const SiteSwitcher: React.FC<Props> = ({
                         </svg>
                       </span>
                     )}
-
-                  </Link>)
-                );
+                  </Link>
+                )
               })}
             </div>
             <div className="border-t py-2 px-2">
               <Link
                 href={`/dashboard/new-site`}
-                className="rounded-lg text-sm text-zinc-500 flex px-2 h-8 items-center hover:bg-zinc-100">
-                
-                  Create a new site
-                
+                className="rounded-lg text-sm text-zinc-500 flex px-2 h-8 items-center hover:bg-zinc-100"
+              >
+                Create a new site
               </Link>
             </div>
           </div>
         </Popover.Panel>
       </Popover>
     </div>
-  );
+  )
 }

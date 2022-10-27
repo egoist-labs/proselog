@@ -3,11 +3,13 @@ import { R2_URL } from "~/lib/env"
 import { trpc } from "~/lib/trpc"
 
 export const useUploadFile = () => {
-  const { fetchQuery } = trpc.useContext()
+  const {
+    user: { getSignedJwt },
+  } = trpc.useContext()
 
   const uploadFile = useCallback<UploadFile>(
     async (blob, filename) => {
-      const jwt = await fetchQuery(["user.getSignedJwt"], {})
+      const jwt = await getSignedJwt.fetch()
 
       const form = new FormData()
       form.append("file", blob, filename)
@@ -24,7 +26,7 @@ export const useUploadFile = () => {
       const data = await res.json()
       return data
     },
-    [fetchQuery]
+    [getSignedJwt],
   )
 
   return uploadFile
@@ -32,5 +34,5 @@ export const useUploadFile = () => {
 
 export type UploadFile = (
   blob: Blob,
-  filename: string
+  filename: string,
 ) => Promise<{ key: string }>

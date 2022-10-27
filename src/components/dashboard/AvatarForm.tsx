@@ -19,8 +19,8 @@ const AvatarEditorModal: React.FC<{
   const editorRef = useRef<ReactAvatarEditor | null>(null)
   const [isSaving, setIsSaving] = useState(false)
   const ctx = trpc.useContext()
-  const updateProfile = trpc.useMutation("user.updateProfile")
-  const updateSite = trpc.useMutation("site.update")
+  const updateProfile = trpc.user.updateProfile.useMutation()
+  const updateSite = trpc.site.update.useMutation()
 
   const cropAndSave = async () => {
     if (!editorRef.current) return
@@ -49,7 +49,7 @@ const AvatarEditorModal: React.FC<{
 
       setIsOpen(false)
       toast.success("Updated!")
-      ctx.invalidateQueries()
+      ctx.invalidate()
     } catch (error: any) {
       console.error(error)
       toast.error(error.message)

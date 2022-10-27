@@ -1,8 +1,9 @@
-import * as trpc from "@trpc/server"
+import { initTRPC } from "@trpc/server"
 import { IncomingMessage } from "http"
-import { OpenApiMeta } from "trpc-openapi"
+import { ZodError } from "zod"
 import { AuthUser, getAuthUser } from "./auth.server"
 import { createGate, Gate } from "./gate.server"
+import { isNotFoundError } from "./server-side-props"
 
 export type TRPCContext = { user: AuthUser | null | undefined; gate: Gate }
 
@@ -19,6 +20,21 @@ export const getTRPCContext = async ({
   }
 }
 
-export const createRouter = () => {
-  return trpc.router<TRPCContext, OpenApiMeta>()
-}
+export const t = initTRPC.context<TRPCContext>().create({
+  errorFormatter({ error, shape }) {
+    const isZodError = error.cause instanceof ZodError
+
+    return {
+      ...shape,
+      message: isZodError
+        ? error.cause.issues
+            .map((i) => `${i.path.join(".")}: ${i.message}`)
+            .join(", ")
+        : error.message,
+      data: {
+        ...shape.data,
+        notFound: isNotFoundError(error.cause),
+      },
+    }
+  },
+})

@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next"
 import { SiteLayout } from "~/components/site/SiteLayout"
 import { getAuthUser } from "~/lib/auth.server"
 import { trpc } from "~/lib/trpc"
-import { createSSGHelpers } from "@trpc/react/ssg"
+import { createProxySSGHelpers } from "@trpc/react-query/ssg"
 import { appRouter } from "~/router"
 import { getTRPCContext } from "~/lib/trpc.server"
 import { SitePage } from "~/components/site/SitePage"
@@ -17,18 +17,20 @@ export const getServerSideProps: GetServerSideProps = serverSidePropsHandler(
     const domainOrSubdomain = ctx.params!.site as string
     const pageSlug = ctx.params!.page as string
 
-    const trpcContext = await getTRPCContext(ctx)
-    const ssg = createSSGHelpers({ router: appRouter, ctx: trpcContext })
+    const ssg = createProxySSGHelpers({
+      router: appRouter,
+      ctx: await getTRPCContext(ctx),
+    })
 
     await Promise.all([
-      ssg.fetchQuery("site.site", { site: domainOrSubdomain }),
-      ssg.fetchQuery("site.page", {
+      ssg.site.site.fetch({ site: domainOrSubdomain }),
+      ssg.site.page.fetch({
         site: domainOrSubdomain,
         page: pageSlug,
         render: true,
         includeAuthors: true,
       }),
-      ssg.fetchQuery("site.my-subscription", { site: domainOrSubdomain }),
+      ssg.site.mySubscription.fetch({ site: domainOrSubdomain }),
     ])
 
     const trpcState = ssg.dehydrate()
@@ -53,23 +55,19 @@ function SitePagePage({
   domainOrSubdomain: string
   pageSlug: string
 }) {
-  const { data: site } = trpc.useQuery(
-    ["site.site", { site: domainOrSubdomain }],
+  const { data: site } = trpc.site.site.useQuery(
+    { site: domainOrSubdomain },
     {},
   )
-  const { data: subscription } = trpc.useQuery([
-    "site.my-subscription",
-    { site: domainOrSubdomain },
-  ])
-  const { data: page } = trpc.useQuery([
-    "site.page",
-    {
-      site: domainOrSubdomain,
-      page: pageSlug,
-      render: true,
-      includeAuthors: true,
-    },
-  ])
+  const { data: subscription } = trpc.site.mySubscription.useQuery({
+    site: domainOrSubdomain,
+  })
+  const { data: page } = trpc.site.page.useQuery({
+    site: domainOrSubdomain,
+    page: pageSlug,
+    render: true,
+    includeAuthors: true,
+  })
 
   const ogDescription = page?.excerpt || page?.rendered?.excerpt
 

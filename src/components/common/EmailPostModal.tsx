@@ -20,7 +20,7 @@ export const EmailPostModal: React.FC<{
       subject: "",
     },
   })
-  const scheduleEmailForPost = trpc.useMutation("site.scheduleEmailForPost")
+  const scheduleEmailForPost = trpc.site.scheduleEmailForPost.useMutation()
 
   const onSubmit = handleSubmit(async (values) => {
     await scheduleEmailForPost.mutateAsync({

@@ -9,7 +9,7 @@ import { Input } from "~/components/ui/Input"
 import { trpc } from "~/lib/trpc"
 
 export default function AccountProfilePage() {
-  const viewer = trpc.useQuery(["auth.viewer"], {
+  const viewer = trpc.auth.viewer.useQuery(undefined, {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   })
@@ -17,7 +17,7 @@ export default function AccountProfilePage() {
     mutate: updateProfile,
     status: updateProfileStatus,
     error: updateProfileError,
-  } = trpc.useMutation("user.updateProfile")
+  } = trpc.user.updateProfile.useMutation()
 
   const { setValue, handleSubmit, register } = useForm({
     defaultValues: {

@@ -3,7 +3,7 @@ import LoginModal from "~/components/common/LoginModal"
 import "~/css/main.css"
 import "~/generated/uno.css"
 import { StoreProvider, createStore } from "~/lib/store"
-import { wrapTrpc } from "~/lib/trpc"
+import { trpc } from "~/lib/trpc"
 
 function MyApp({ Component, pageProps }: any) {
   return (
@@ -27,4 +27,4 @@ function MyApp({ Component, pageProps }: any) {
 //   return { ...appProps }
 // }
 
-export default wrapTrpc()(MyApp)
+export default trpc.withTRPC(MyApp)

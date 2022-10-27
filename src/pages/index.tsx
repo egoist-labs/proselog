@@ -1,6 +1,5 @@
 import { GetServerSideProps } from "next"
 import { useEffect } from "react"
-import { DashboardIcon } from "~/components/icons/DashboardIcon"
 import { MainLayout } from "~/components/main/MainLayout"
 import { UniLink } from "~/components/ui/UniLink"
 import { getAuthUser } from "~/lib/auth.server"

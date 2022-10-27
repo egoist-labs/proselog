@@ -20,8 +20,8 @@ export const SubscribeModal: React.FC<{
     store.subscribeModalOpened,
     store.setSubscribeModalOpened,
   ])
-  const subscribe = trpc.useMutation("site.subscribe")
-  const unsubscribe = trpc.useMutation("site.unsubscribe")
+  const subscribe = trpc.site.subscribe.useMutation()
+  const unsubscribe = trpc.site.unsubscribe.useMutation()
   const trpcContext = trpc.useContext()
 
   const subscribeForm = useForm({
@@ -48,7 +48,7 @@ export const SubscribeModal: React.FC<{
     if (subscribe.isSuccess && isLoggedIn) {
       subscribe.reset()
       toast.success(subscription ? "Updated!" : "Subscribed!")
-      trpcContext.invalidateQueries("site.my-subscription")
+      trpcContext.site.mySubscription.invalidate()
     }
   }, [subscribe, isLoggedIn, subscription, trpcContext])
 
@@ -56,7 +56,7 @@ export const SubscribeModal: React.FC<{
     if (unsubscribe.isSuccess) {
       unsubscribe.reset()
       toast.success("Unsubscribed!")
-      trpcContext.invalidateQueries("site.my-subscription")
+      trpcContext.site.mySubscription.invalidate()
     }
   }, [unsubscribe, trpcContext])
 
