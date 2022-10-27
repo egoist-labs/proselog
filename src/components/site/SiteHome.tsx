@@ -16,31 +16,31 @@ export const SiteHome: React.FC<{
           {posts.nodes.map((post) => {
             const excerpt = post.excerpt || post.autoExcerpt
             return (
-              <Link key={post.id} href={`/${post.slug}`}>
-                <a className="block group">
-                  <h3 className="text-2xl font-bold hover:text-indigo-500">
-                    {post.title}
-                  </h3>
-                  <div className="text-sm text-zinc-400 mt-1">
-                    {formatDate(post.publishedAt)}
-                  </div>
-                  <div className="mt-3 text-lg text-zinc-500">
-                    {excerpt}
-                    {excerpt && (
-                      <span>
-                        ...{" "}
-                        <span className="text-indigo-400 hover:text-indigo-500">
-                          Read more
-                        </span>
+              (<Link key={post.id} href={`/${post.slug}`} className="block group">
+
+                <h3 className="text-2xl font-bold hover:text-indigo-500">
+                  {post.title}
+                </h3>
+                <div className="text-sm text-zinc-400 mt-1">
+                  {formatDate(post.publishedAt)}
+                </div>
+                <div className="mt-3 text-lg text-zinc-500">
+                  {excerpt}
+                  {excerpt && (
+                    <span>
+                      ...{" "}
+                      <span className="text-indigo-400 hover:text-indigo-500">
+                        Read more
                       </span>
-                    )}
-                  </div>
-                </a>
-              </Link>
-            )
+                    </span>
+                  )}
+                </div>
+
+              </Link>)
+            );
           })}
         </div>
       )}
     </div>
-  )
+  );
 }

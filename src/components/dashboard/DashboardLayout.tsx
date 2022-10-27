@@ -68,55 +68,54 @@ export function DashboardLayout({
     },
   ]
 
-  return (
-    <>
-      <SEOHead title={title} siteName={APP_NAME} />
-      <div className="flex">
-        <DashboardSidebar>
-          <div className="mb-2">
-            <SiteSwitcher
-              subdomain={subdomain}
-              subscriptions={subscriptions || []}
-              viewer={viewer}
-            />
-          </div>
+  return <>
+    <SEOHead title={title} siteName={APP_NAME} />
+    <div className="flex">
+      <DashboardSidebar>
+        <div className="mb-2">
+          <SiteSwitcher
+            subdomain={subdomain}
+            subscriptions={subscriptions || []}
+            viewer={viewer}
+          />
+        </div>
 
-          <div className="px-3 space-y-[2px] text-zinc-500">
-            {links.map((link) => {
-              const active = link.isActive({
-                pathname: router.asPath,
-                href: link.href,
-              })
-              return (
-                <Link href={link.href} key={link.href}>
-                  <a
-                    className={clsx(
-                      `flex px-2 h-8 text-sm items-center rounded-lg space-x-2`,
-                      active
-                        ? `bg-gray-200 font-medium text-gray-800`
-                        : `hover:bg-gray-200 hover:bg-opacity-50`,
-                    )}
-                  >
-                    <span className={clsx(link.icon, "text-lg")}></span>
-                    <span>{link.text}</span>
-                  </a>
-                </Link>
-              )
-            })}
-          </div>
+        <div className="px-3 space-y-[2px] text-zinc-500">
+          {links.map((link) => {
+            const active = link.isActive({
+              pathname: router.asPath,
+              href: link.href,
+            })
+            return (
+              (<Link
+                href={link.href}
+                key={link.href}
+                className={clsx(
+                  `flex px-2 h-8 text-sm items-center rounded-lg space-x-2`,
+                  active
+                    ? `bg-gray-200 font-medium text-gray-800`
+                    : `hover:bg-gray-200 hover:bg-opacity-50`,
+                )}>
 
-          <div className="absolute bottom-0 left-0 right-0 h-20 flex items-center px-4">
-            <UniLink
-              href={getSiteLink({ subdomain })}
-              className="space-x-2 border rounded-lg bg-gray-100 border-gray-200 text-gray-500 hover:border-indigo-300 hover:bg-indigo-100 hover:text-indigo-500 flex w-full h-12 items-center justify-center transition-colors"
-            >
-              <span className="i-bi:box-arrow-up-right"></span>
-              <span>View Site</span>
-            </UniLink>
-          </div>
-        </DashboardSidebar>
-        {children}
-      </div>
-    </>
-  )
+                <span className={clsx(link.icon, "text-lg")}></span>
+                <span>{link.text}</span>
+
+              </Link>)
+            );
+          })}
+        </div>
+
+        <div className="absolute bottom-0 left-0 right-0 h-20 flex items-center px-4">
+          <UniLink
+            href={getSiteLink({ subdomain })}
+            className="space-x-2 border rounded-lg bg-gray-100 border-gray-200 text-gray-500 hover:border-indigo-300 hover:bg-indigo-100 hover:text-indigo-500 flex w-full h-12 items-center justify-center transition-colors"
+          >
+            <span className="i-bi:box-arrow-up-right"></span>
+            <span>View Site</span>
+          </UniLink>
+        </div>
+      </DashboardSidebar>
+      {children}
+    </div>
+  </>;
 }

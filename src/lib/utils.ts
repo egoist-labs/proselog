@@ -5,5 +5,5 @@ export function truthy<T>(value: T): value is Truthy<T> {
 }
 
 export function stripHTML(html: string) {
-  return html.replace(/<(?:.|\n)*?>/gm, "")
+  return html.replace(/<(?:.|\n)*?>/gm, "");
 }

@@ -80,12 +80,10 @@ export const SiteHeader: React.FC<{
               />
             )}
             <div>
-              <Link href="/">
-                <a
-                  className={clsx(`hover:text-indigo-400 text-xl`, `font-bold`)}
-                >
-                  {siteName}
-                </a>
+              <Link href="/" className={clsx(`hover:text-indigo-400 text-xl`, `font-bold`)}>
+
+                {siteName}
+
               </Link>
             </div>
           </div>
@@ -169,5 +167,5 @@ export const SiteHeader: React.FC<{
         </div>
       </div>
     </header>
-  )
+  );
 }

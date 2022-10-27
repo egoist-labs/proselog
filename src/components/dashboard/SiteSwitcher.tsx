@@ -71,45 +71,47 @@ export const SiteSwitcher: React.FC<Props> = ({
             <div className="p-2">
               {subscriptions?.map((subscription) => {
                 return (
-                  <Link
+                  (<Link
                     key={subscription.id}
                     href={`/dashboard/${subscription.site.subdomain}`}
-                  >
-                    <a className="flex px-2 h-8 rounded-lg items-center justify-between hover:bg-zinc-100">
-                      <span className="truncate w-8/12">
-                        {subscription.site.name}
+                    className="flex px-2 h-8 rounded-lg items-center justify-between hover:bg-zinc-100">
+
+                    <span className="truncate w-8/12">
+                      {subscription.site.name}
+                    </span>
+                    {activeSubscription?.id === subscription.id && (
+                      <span className="text-accent">
+                        <svg
+                          className="w-5 h-5"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
                       </span>
-                      {activeSubscription?.id === subscription.id && (
-                        <span className="text-accent">
-                          <svg
-                            className="w-5 h-5"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        </span>
-                      )}
-                    </a>
-                  </Link>
-                )
+                    )}
+
+                  </Link>)
+                );
               })}
             </div>
             <div className="border-t py-2 px-2">
-              <Link href={`/dashboard/new-site`}>
-                <a className="rounded-lg text-sm text-zinc-500 flex px-2 h-8 items-center hover:bg-zinc-100">
+              <Link
+                href={`/dashboard/new-site`}
+                className="rounded-lg text-sm text-zinc-500 flex px-2 h-8 items-center hover:bg-zinc-100">
+                
                   Create a new site
-                </a>
+                
               </Link>
             </div>
           </div>
         </Popover.Panel>
       </Popover>
     </div>
-  )
+  );
 }

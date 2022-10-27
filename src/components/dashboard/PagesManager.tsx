@@ -183,72 +183,75 @@ export const PagesManager: React.FC<{
 
         {pages?.map((page) => {
           return (
-            <Link key={page.id} href={getPageEditLink(page)}>
-              <a className="group relative hover:bg-zinc-100 rounded-lg py-3 px-3 transition-colors -mx-3 flex justify-between">
-                <div>
-                  <div className="flex items-center">
-                    <span>{page.title}</span>
-                  </div>
-                  <div className="text-zinc-400 text-xs mt-1">
-                    <span className="capitalize">
-                      {getPageVisibility(page).toLowerCase()}
-                    </span>
-                    <span className="mx-2">·</span>
-                    <span>{formatDate(page.publishedAt)}</span>
-                  </div>
+            (<Link
+              key={page.id}
+              href={getPageEditLink(page)}
+              className="group relative hover:bg-zinc-100 rounded-lg py-3 px-3 transition-colors -mx-3 flex justify-between">
+
+              <div>
+                <div className="flex items-center">
+                  <span>{page.title}</span>
                 </div>
-                <div className="w-10 flex-shrink-0">
-                  <Menu>
-                    {({ open }) => (
-                      <>
-                        <Menu.Button as={Fragment}>
-                          <button
-                            className={clsx(
-                              `text-gray-400 relative z-50 w-8 h-8 rounded inline-flex invisible group-hover:visible justify-center items-center`,
-                              open ? `bg-gray-200` : `hover:bg-gray-200`,
-                            )}
-                            onClick={(e) => {
-                              e.stopPropagation()
-                            }}
+                <div className="text-zinc-400 text-xs mt-1">
+                  <span className="capitalize">
+                    {getPageVisibility(page).toLowerCase()}
+                  </span>
+                  <span className="mx-2">·</span>
+                  <span>{formatDate(page.publishedAt)}</span>
+                </div>
+              </div>
+              <div className="w-10 flex-shrink-0">
+                <Menu>
+                  {({ open }) => (
+                    <>
+                      <Menu.Button as={Fragment}>
+                        <button
+                          className={clsx(
+                            `text-gray-400 relative z-50 w-8 h-8 rounded inline-flex invisible group-hover:visible justify-center items-center`,
+                            open ? `bg-gray-200` : `hover:bg-gray-200`,
+                          )}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                          }}
+                        >
+                          <svg
+                            className="w-5 h-5"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <svg
-                              className="w-5 h-5"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                            </svg>
-                          </button>
-                        </Menu.Button>
-                        <Menu.Items className="text-sm absolute z-20 right-0 bg-white shadow-modal rounded-lg overflow-hidden py-2 w-64">
-                          {getPageMenuItems(page).map((item) => {
-                            return (
-                              <Menu.Item key={item.text}>
-                                <button
-                                  type="button"
-                                  className="h-10 flex w-full space-x-2 items-center px-3 hover:bg-gray-100"
-                                  onClick={(e) => {
-                                    e.preventDefault()
-                                    item.onClick()
-                                  }}
-                                >
-                                  <span>{item.icon}</span>
-                                  <span>{item.text}</span>
-                                </button>
-                              </Menu.Item>
-                            )
-                          })}
-                        </Menu.Items>
-                      </>
-                    )}
-                  </Menu>
-                </div>
-              </a>
-            </Link>
-          )
+                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                          </svg>
+                        </button>
+                      </Menu.Button>
+                      <Menu.Items className="text-sm absolute z-20 right-0 bg-white shadow-modal rounded-lg overflow-hidden py-2 w-64">
+                        {getPageMenuItems(page).map((item) => {
+                          return (
+                            <Menu.Item key={item.text}>
+                              <button
+                                type="button"
+                                className="h-10 flex w-full space-x-2 items-center px-3 hover:bg-gray-100"
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  item.onClick()
+                                }}
+                              >
+                                <span>{item.icon}</span>
+                                <span>{item.text}</span>
+                              </button>
+                            </Menu.Item>
+                          )
+                        })}
+                      </Menu.Items>
+                    </>
+                  )}
+                </Menu>
+              </div>
+
+            </Link>)
+          );
         })}
       </div>
     </DashboardMain>
-  )
+  );
 }
