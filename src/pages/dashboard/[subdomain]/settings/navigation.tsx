@@ -138,7 +138,6 @@ export default function SiteSettingsNavigationPage() {
                 No navigation items yet
               </div>
             )}
-            {/** @ts-expect-error */}
             <ReactSortable
               list={items}
               setList={setItems}

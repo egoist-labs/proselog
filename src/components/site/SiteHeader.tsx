@@ -1,16 +1,15 @@
 import clsx from "clsx"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import { logout } from "~/lib/auth.client"
 import { IS_PROD } from "~/lib/constants"
 import { OUR_DOMAIN } from "~/lib/env"
-import { useStore } from "~/lib/store"
 import { Viewer } from "~/lib/types"
 import { getUserContentsUrl } from "~/lib/user-contents"
 import { truthy } from "~/lib/utils"
 import { DashboardIcon } from "../icons/DashboardIcon"
 import { Avatar } from "../ui/Avatar"
 import { UniLink } from "../ui/UniLink"
+import { useLoginModalOpened, useSubscribeModalOpened } from "~/lib/store"
 
 type HeaderLinkType =
   | {
@@ -29,10 +28,8 @@ export const SiteHeader: React.FC<{
   subscribed?: boolean
   viewer: Viewer | null
 }> = ({ siteName, description, icon, navigation, subscribed, viewer }) => {
-  const setSubscribeModalOpened = useStore(
-    (store) => store.setSubscribeModalOpened,
-  )
-  const setLoginModalOpened = useStore((store) => store.setLoginModalOpened)
+  const [, setSubscribeModalOpened] = useSubscribeModalOpened()
+  const [, setLoginModalOpened] = useLoginModalOpened()
 
   const handleClickSubscribe = () => {
     setSubscribeModalOpened(true)
@@ -80,10 +77,11 @@ export const SiteHeader: React.FC<{
               />
             )}
             <div>
-              <Link href="/" className={clsx(`hover:text-indigo-400 text-xl`, `font-bold`)}>
-
+              <Link
+                href="/"
+                className={clsx(`hover:text-indigo-400 text-xl`, `font-bold`)}
+              >
                 {siteName}
-
               </Link>
             </div>
           </div>
@@ -167,5 +165,5 @@ export const SiteHeader: React.FC<{
         </div>
       </div>
     </header>
-  );
+  )
 }

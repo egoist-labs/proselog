@@ -1,5 +1,4 @@
-import create, { StoreApi } from "zustand"
-import createContext from "zustand/context"
+import { atom, useAtom } from "jotai"
 
 export type Store = {
   loginModalOpened: boolean
@@ -12,26 +11,10 @@ export type Store = {
   setEmailPostModalOpened: (open: boolean) => void
 }
 
-const { Provider, useStore } = createContext<StoreApi<Store>>()
+const loginModalOpenedAtom = atom(false)
+const subscribeModalOpenedAtom = atom(false)
+const emailPostModalOpenedAtom = atom(false)
 
-export { useStore }
-
-export const StoreProvider = Provider
-
-export const createStore = () =>
-  create<Store>((set) => ({
-    loginModalOpened: false,
-    setLoginModalOpened(open) {
-      set({ loginModalOpened: open })
-    },
-
-    subscribeModalOpened: false,
-    setSubscribeModalOpened(open) {
-      set({ subscribeModalOpened: open })
-    },
-
-    emailPostModalOpened: false,
-    setEmailPostModalOpened(open) {
-      set({ emailPostModalOpened: open })
-    },
-  }))
+export const useLoginModalOpened = () => useAtom(loginModalOpenedAtom)
+export const useSubscribeModalOpened = () => useAtom(subscribeModalOpenedAtom)
+export const useEmailPostModalOpened = () => useAtom(emailPostModalOpenedAtom)

@@ -6,9 +6,9 @@ import {
   GITHUB_LINK,
   OUR_DOMAIN,
 } from "~/lib/env"
-import { useStore } from "~/lib/store"
 import { SEOHead } from "../common/SEOHead"
 import { UniLink } from "../ui/UniLink"
+import { useLoginModalOpened } from "~/lib/store"
 
 export function MainLayout({
   isLoggedIn,
@@ -19,7 +19,7 @@ export function MainLayout({
   children?: React.ReactNode
   title?: string
 }) {
-  const setLoginModalOpened = useStore((store) => store.setLoginModalOpened)
+  const [, setLoginModalOpened] = useLoginModalOpened()
   const discordLink = `https://${OUR_DOMAIN}/discord`
   const companyLinks = [
     { text: "Blog", href: `https://blog.${OUR_DOMAIN}` },

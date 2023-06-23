@@ -6,7 +6,7 @@ import {
   MAILGUN_DOMAIN_NEWSLETTER,
   MAILGUN_DOMAIN_TRANSANCTION,
 } from "~/lib/env.server"
-import type { MailgunMessageData } from "mailgun.js/interfaces/Messages"
+import type { MailgunMessageData } from "mailgun.js/Types/Messages"
 import { IS_PROD } from "./constants"
 import { APP_NAME, OUR_DOMAIN, SITE_URL } from "./env"
 import { SubscribeFormData } from "./types"

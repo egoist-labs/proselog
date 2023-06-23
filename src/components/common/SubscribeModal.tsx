@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-import { useStore } from "~/lib/store"
 import { Button } from "../ui/Button"
 import { Modal } from "../ui/Modal"
 import toast from "react-hot-toast"
@@ -7,6 +6,7 @@ import { trpc } from "~/lib/trpc"
 import { Input } from "../ui/Input"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/router"
+import { useSubscribeModalOpened } from "~/lib/store"
 
 export const SubscribeModal: React.FC<{
   siteId: string
@@ -16,10 +16,8 @@ export const SubscribeModal: React.FC<{
   isLoggedIn: boolean
 }> = ({ siteId, subscription, isLoggedIn }) => {
   const router = useRouter()
-  const [open, setOpen] = useStore((store) => [
-    store.subscribeModalOpened,
-    store.setSubscribeModalOpened,
-  ])
+  const [subscribeModalOpened, setSubscribeModalOpened] =
+    useSubscribeModalOpened()
   const subscribe = trpc.site.subscribe.useMutation()
   const unsubscribe = trpc.site.unsubscribe.useMutation()
   const trpcContext = trpc.useContext()
@@ -63,9 +61,9 @@ export const SubscribeModal: React.FC<{
   return (
     <Modal
       title={subscription ? `Manage your subscription` : `Become a subscriber`}
-      open={open}
+      open={subscribeModalOpened}
       setOpen={(open) => {
-        setOpen(open)
+        setSubscribeModalOpened(open)
         if (!open && "subscription" in router.query) {
           const query = new URLSearchParams(window.location.search)
           query.delete("subscription")

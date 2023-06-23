@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next"
 import { SiteLayout } from "~/components/site/SiteLayout"
 import { getAuthUser } from "~/lib/auth.server"
 import { trpc } from "~/lib/trpc"
-import { createProxySSGHelpers } from "@trpc/react-query/ssg"
+import { createServerSideHelpers } from "@trpc/react-query/server"
 import { appRouter } from "~/router"
 import { getTRPCContext } from "~/lib/trpc.server"
 import { SitePage } from "~/components/site/SitePage"
@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = serverSidePropsHandler(
     const domainOrSubdomain = ctx.params!.site as string
     const pageSlug = ctx.params!.page as string
 
-    const ssg = createProxySSGHelpers({
+    const ssg = createServerSideHelpers({
       router: appRouter,
       ctx: await getTRPCContext(ctx),
     })

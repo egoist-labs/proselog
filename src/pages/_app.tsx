@@ -1,17 +1,19 @@
-import { Toaster } from "react-hot-toast"
-import LoginModal from "~/components/common/LoginModal"
 import "~/css/main.css"
 import "~/generated/uno.css"
-import { StoreProvider, createStore } from "~/lib/store"
+import { Toaster } from "react-hot-toast"
+import LoginModal from "~/components/common/LoginModal"
+import { TooltipProvider } from "~/components/ui/Tooltip"
 import { trpc } from "~/lib/trpc"
 
 function MyApp({ Component, pageProps }: any) {
   return (
-    <StoreProvider createStore={createStore}>
-      <Component {...pageProps} />
+    <>
+      <TooltipProvider delayDuration={0}>
+        <Component {...pageProps} />
+      </TooltipProvider>
       <LoginModal />
       <Toaster />
-    </StoreProvider>
+    </>
   )
 }
 

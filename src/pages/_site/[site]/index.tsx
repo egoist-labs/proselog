@@ -3,7 +3,7 @@ import { SiteHome } from "~/components/site/SiteHome"
 import { SiteLayout } from "~/components/site/SiteLayout"
 import { getAuthUser } from "~/lib/auth.server"
 import { trpc } from "~/lib/trpc"
-import { createProxySSGHelpers } from "@trpc/react-query/ssg"
+import { createServerSideHelpers } from "@trpc/react-query/server"
 import { appRouter } from "~/router"
 import { getTRPCContext } from "~/lib/trpc.server"
 import { Viewer } from "~/lib/types"
@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const viewer = getViewer(user)
   const trpcContext = await getTRPCContext(ctx)
-  const ssg = createProxySSGHelpers({ router: appRouter, ctx: trpcContext })
+  const ssg = createServerSideHelpers({ router: appRouter, ctx: trpcContext })
 
   await Promise.all([
     ssg.site.site.fetch({ site: domainOrSubdomain }),

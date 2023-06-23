@@ -4,7 +4,7 @@ import { MainLayout } from "~/components/main/MainLayout"
 import { UniLink } from "~/components/ui/UniLink"
 import { getAuthUser } from "~/lib/auth.server"
 import { FLY_REGION } from "~/lib/env.server"
-import { useStore } from "~/lib/store"
+import { useLoginModalOpened } from "~/lib/store"
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const user = await getAuthUser(ctx.req)
@@ -25,7 +25,7 @@ export default function Home({
   isLoggedIn: boolean
   region: string | null
 }) {
-  const setLoginModalOpened = useStore((store) => store.setLoginModalOpened)
+  const [, setLoginModalOpened] = useLoginModalOpened()
 
   useEffect(() => {
     console.log("-> region", region)

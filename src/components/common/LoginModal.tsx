@@ -1,16 +1,13 @@
 import { Button } from "~/components/ui/Button"
-import { useStore } from "~/lib/store"
 import { trpc } from "~/lib/trpc"
 import { useForm } from "react-hook-form"
 import { Modal } from "../ui/Modal"
 import { UniLink } from "../ui/UniLink"
 import { DOCS_DOMAIN } from "~/lib/env"
+import { useLoginModalOpened } from "~/lib/store"
 
 export const LoginModal: React.FC = () => {
-  const [loginModalOpened, setLoginModalOpened] = useStore((store) => [
-    store.loginModalOpened,
-    store.setLoginModalOpened,
-  ])
+  const [loginModalOpened, setLoginModalOpened] = useLoginModalOpened()
   const {
     mutate: requestLoginLink,
     status: requestLoginLinkStatus,

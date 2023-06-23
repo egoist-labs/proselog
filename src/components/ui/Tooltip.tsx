@@ -1,63 +1,43 @@
-import { cloneElement, useState } from "react"
-import {
-  Placement,
-  offset,
-  flip,
-  shift,
-  autoUpdate,
-  useFloating,
-  useInteractions,
-  useHover,
-  useFocus,
-  useRole,
-  useDismiss,
-} from "@floating-ui/react-dom-interactions"
+"use client"
 
-interface Props {
-  label: string
-  placement?: Placement
-  children: JSX.Element
-}
+import * as React from "react"
+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 
-export const Tooltip = ({ children, label, placement = "top" }: Props) => {
-  const [open, setOpen] = useState(false)
+import { cn } from "~/lib/cn"
 
-  const { x, y, reference, floating, strategy, context } = useFloating({
-    placement,
-    open,
-    onOpenChange: setOpen,
-    middleware: [offset(5), flip(), shift({ padding: 8 })],
-    whileElementsMounted: autoUpdate,
-  })
+export const TooltipProvider = TooltipPrimitive.Provider
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    useHover(context),
-    useFocus(context),
-    useRole(context, { role: "tooltip" }),
-    useDismiss(context),
-  ])
+const TooltipContent = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <TooltipPrimitive.Content
+    ref={ref}
+    sideOffset={sideOffset}
+    className={cn(
+      "z-50 overflow-hidden rounded-md bg-black px-3 py-1.5 text-sm text-white shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className,
+    )}
+    {...props}
+  />
+))
+TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
+export const Tooltip = ({
+  label,
+  children,
+  side,
+}: {
+  label: React.ReactNode
+  children: React.ReactNode
+  side?: "top" | "bottom" | "left" | "right"
+}) => {
   return (
-    <>
-      {cloneElement(
-        children,
-        getReferenceProps({ ref: reference, ...children.props }),
-      )}
-      {open && (
-        <div
-          {...getFloatingProps({
-            ref: floating,
-            className: "bg-black/75 text-white rounded-lg shadow-lg px-3 py-2",
-            style: {
-              position: strategy,
-              top: y ?? "",
-              left: x ?? "",
-            },
-          })}
-        >
-          {label}
-        </div>
-      )}
-    </>
+    <TooltipPrimitive.Tooltip>
+      <TooltipPrimitive.TooltipTrigger asChild>
+        {children}
+      </TooltipPrimitive.TooltipTrigger>
+      <TooltipContent side={side}>{label}</TooltipContent>
+    </TooltipPrimitive.Tooltip>
   )
 }

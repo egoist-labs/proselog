@@ -7,7 +7,7 @@ import { SiteNavigationItem, Viewer } from "~/lib/types"
 import { SiteFooter } from "./SiteFooter"
 import { SiteHeader } from "./SiteHeader"
 import { useRouter } from "next/router"
-import { useStore } from "~/lib/store"
+import { useSubscribeModalOpened } from "~/lib/store"
 
 export type SiteLayoutProps = {
   site: {
@@ -33,9 +33,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({
   ogDescription,
 }) => {
   const router = useRouter()
-  const setSubscribeModalOpened = useStore(
-    (store) => store.setSubscribeModalOpened,
-  )
+  const [, setSubscribeModalOpened] = useSubscribeModalOpened()
 
   useEffect(() => {
     if ("subscription" in router.query) {

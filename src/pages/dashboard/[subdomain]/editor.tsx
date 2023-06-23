@@ -22,7 +22,7 @@ import { PageVisibilityEnum } from "~/lib/types"
 import { FieldLabel } from "~/components/ui/FieldLabel"
 import { Button } from "~/components/ui/Button"
 import { EmailPostModal } from "~/components/common/EmailPostModal"
-import { useStore } from "~/lib/store"
+import { useEmailPostModalOpened } from "~/lib/store"
 
 const getInputDatetimeValue = (date: Date | string) => {
   const str = dayjs(date).format()
@@ -65,10 +65,8 @@ export default function SubdomainEditor() {
     reset: resetCreateOrUpdatePage,
   } = trpc.page.createOrUpdate.useMutation()
   const uploadFile = useUploadFile()
-  const [emailPostModalOpened, setEmailPostModalOpened] = useStore((store) => [
-    store.emailPostModalOpened,
-    store.setEmailPostModalOpened,
-  ])
+  const [emailPostModalOpened, setEmailPostModalOpened] =
+    useEmailPostModalOpened()
 
   const [values, setValues] = useState({
     title: "",
